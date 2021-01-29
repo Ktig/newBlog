@@ -154,19 +154,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-hello-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/01/29/hello-world/">Hello World</a>
+      <a class="article-title" href="/newBlog/2021/01/29/hello-hexo/">记录hexo博客第一次艰难的发布历程</a>
     </h1>
   
 
         
-        <a href="/newBlog/2021/01/29/hello-world/" class="archive-article-date">
+        <a href="/newBlog/2021/01/29/hello-hexo/" class="archive-article-date">
   	<time datetime="2021-01-29T07:22:12.501Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-29</time>
 </a>
         
@@ -174,15 +174,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h3 id="简单粗暴，直接参考知乎大神心得"><a href="#简单粗暴，直接参考知乎大神心得" class="headerlink" title="简单粗暴，直接参考知乎大神心得"></a>简单粗暴，直接参考知乎大神心得</h3><p>请跳转: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78880987">https://zhuanlan.zhihu.com/p/78880987</a></p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1.自己使用的是yilia主题，点击右侧所有文章，出现的并不是标题列表，按照指示操作即可<br>2.自己电脑在执行如下命令的时候遇到了问题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br></pre></td></tr></table></figure>
+<p>直接提示如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Logon failed, use ctrl+c to cancel basic...</span><br></pre></td></tr></table></figure>
+<p>然后我通过控制面板删除了原来使用该电脑人的github凭证信息，并添加了自己的github凭证信息，不行<br>然后我找到C盘发现SSH文件不存在了，所以通过下面指令又创建了SSH文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
+<p>生成之后贴到了git里面<br>然后又出现了如下怪异的事情</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: Invalid username or password</span><br></pre></td></tr></table></figure>
+<p>再次，我了解到，要通过git里面setting-&gt;Developer settings -&gt; Personal access tokens新建token，并不行<br>包括执行如下命令N次也没有什么效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
+<p>马上要放弃的时候，我转到了我的gitee项目里面，发现拉取代码的时候有问题，不能直接拉取，要通过输入账号和密码才能拉取，而且每次都要重新输入<br>所以我执行了如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper store</span><br><span class="line">git config --global user.name <span class="string">&quot;name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这时候输入密码的时候，只会弹出一次，后面就可以直接畅快的拉取提交了<br>由于我使用的是VS code编辑器，这个编辑器和git是有关联的，可以登录git账号的，我发现左下角有个提示，说一直在登陆中，然后我点击了一下相当于取消登录了<br>然后我转到了hexo上，又执行了一次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br></pre></td></tr></table></figure>
+<p>同样的，有输入了名字和密码，终于….成功推上去了，泪奔。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>试了这么多，并不知道问题到底出现在什么地方了，我觉得以上都要试一试<br>完美，下班~</p>
 
       
 
@@ -195,7 +203,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/newBlog/2021/01/29/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/newBlog/2021/01/29/hello-hexo/">展开全文 >></a>
         </p>
       
 
