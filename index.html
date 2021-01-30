@@ -44,11 +44,11 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="" class="profilepic">
-			<img src="/img/avator.jpg" class="js-avatar show">
+		<a href="/newBlog/" class="profilepic">
+			<img src="/img/avator.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="">kuan&#39;s</a></h1>
+		  <h1 class="header-author"><a href="/newBlog/">kuan&#39;s</a></h1>
 		</hgroup>
 		
 		<p class="header-subtitle">真正的大师永远怀着一颗学徒的心</p>
@@ -189,13 +189,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: Invalid username or password</span><br></pre></td></tr></table></figure>
 <p>再次，我了解到，要通过git里面setting-&gt;Developer settings -&gt; Personal access tokens新建token，并不行<br>包括执行如下命令N次也没有什么效果</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
-<p>马上要放弃的时候，我转到了我的gitee项目里面，发现拉取代码的时候有问题，不能直接拉取，要通过输入账号和密码才能拉取，而且每次都要重新输入<br>所以我执行了如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper store</span><br><span class="line">git config --global user.name <span class="string">&quot;name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
-<p>这时候输入密码的时候，只会弹出一次，后面就可以直接畅快的拉取提交了<br>由于我使用的是VS code编辑器，这个编辑器和git是有关联的，可以登录git账号的，我发现左下角有个提示，说一直在登陆中，然后我点击了一下相当于取消登录了<br>然后我转到了hexo上，又执行了一次</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br></pre></td></tr></table></figure>
-<p>同样的，有输入了名字和密码，终于….成功推上去了，泪奔。</p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>试了这么多，并不知道问题到底出现在什么地方了，我觉得以上都要试一试<br>完美，下班~</p>
-
+        
+          <a class="article-more-a" href="/newBlog/2021/01/29/hello-hexo/#more">more >></a>
+        
       
 
       
@@ -216,10 +212,6 @@
 
       
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/newBlog/2021/01/29/hello-hexo/">展开全文 >></a>
-        </p>
       
 
       
