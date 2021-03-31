@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Ktig.github.io/newBlog">
-  <title>前端面试题--慢慢啃 | Hexo</title>
+  <title>前端打印相关 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
+  <meta name="description" content="需求需要打印相关页面区域，涉及到打印商品条码 依赖及使用1.生成条码，npm依赖及使用 1$ npm install --save @xkeshi&#x2F;vue-barcode 123456789&lt;VueBarcode :value&#x3D;&quot;item.barCode&quot; :options&#x3D;&quot;barcode_options&quot; &#x2F;&gt;...import VueBar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端面试题--慢慢啃">
-<meta property="og:url" content="https://ktig.github.io/newBlog/2021/03/24/interviewQuestion/index.html">
+<meta property="og:title" content="前端打印相关">
+<meta property="og:url" content="https://ktig.github.io/newBlog/2021/03/31/print/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
+<meta property="og:description" content="需求需要打印相关页面区域，涉及到打印商品条码 依赖及使用1.生成条码，npm依赖及使用 1$ npm install --save @xkeshi&#x2F;vue-barcode 123456789&lt;VueBarcode :value&#x3D;&quot;item.barCode&quot; :options&#x3D;&quot;barcode_options&quot; &#x2F;&gt;...import VueBar">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-24T08:35:12.424Z">
-<meta property="article:modified_time" content="2021-03-24T09:30:10.834Z">
+<meta property="article:published_time" content="2021-03-31T07:01:55.867Z">
+<meta property="article:modified_time" content="2021-03-31T07:18:43.331Z">
 <meta property="article:author" content="kuan&#96;s">
-<meta property="article:tag" content="面试题">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="npm">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -161,33 +162,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-interviewQuestion" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-print" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      前端面试题--慢慢啃
+      前端打印相关
     </h1>
   
 
         
-        <a href="/newBlog/2021/03/24/interviewQuestion/" class="archive-article-date">
-  	<time datetime="2021-03-24T08:35:12.424Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
+        <a href="/newBlog/2021/03/31/print/" class="archive-article-date">
+  	<time datetime="2021-03-31T07:01:55.867Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？"><a href="#1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？" class="headerlink" title="1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？"></a>1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？</h3><p>vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。<br>在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key =&gt; index 的map映射），如果没找到就认为是一个新增节点。<br>而如果没有key，那么就会采用遍历查找的方式去找到对应的旧节点。<br>一种一个map映射，另一种是遍历查找。相比而言，map映射的速度更快。<br>另一种情况，对于一些简单的场景，在渲染速度上，没有key确实比有key值得渲染速度更快，原因是对这些节点就地复用，省去了依赖key值增删对比所用的耗时<br>例子：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div v-for=<span class="string">&quot;i in dataList&quot;</span>&gt;&#123;&#123; i &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-‘1’-‘2’-‘3’-map-parseInt"><a href="#2-‘1’-‘2’-‘3’-map-parseInt" class="headerlink" title="2.[‘1’, ‘2’, ‘3’].map(parseInt)"></a>2.[‘1’, ‘2’, ‘3’].map(parseInt)</h3><p>看似简单，其实坑多，最重要的还是要理解parseInt这个函数的本质<br>parseInt接受两个参数(string,radix),其中radix代表的是进制的意思<br>其中string对应map的第一个参数item<br>radix对应map的第二个参数index<br>官方文档解释：如果radix省略或者为0，则按照10进制去解析，所以：<br>parseInt(1,0)，输出1<br>parseInt(2,1)，输出NaN，因为1进制只允许0,1<br>parseInt(3,2)，输出NaN，因为2进制只允许0,1,2</p>
-<h3 id="3-防抖和节流"><a href="#3-防抖和节流" class="headerlink" title="3.防抖和节流"></a>3.防抖和节流</h3><p>防抖：触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> debounce(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> timeout = null; // 创建一个标记用来存放定时器的返回值</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉</span><br><span class="line">        timeout = setTimeout(() =&gt; &#123; // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数</span><br><span class="line">            fn.apply(this, arguments); // 这个地方使用this,而不直接用fn是为了解决this指向的是input而不是window</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sayHi</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;防抖成功&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">var inp = document.getElementById(<span class="string">&#x27;inp&#x27;</span>);</span><br><span class="line">inp.addEventListener(<span class="string">&#x27;input&#x27;</span>, debounce(sayHi)); // 防抖</span><br></pre></td></tr></table></figure>
-<p>节流：高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> throttle(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> canRun = <span class="literal">true</span>; // 通过闭包保存一个标记</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        <span class="keyword">if</span> (!canRun) <span class="built_in">return</span>; // 在函数开头判断标记是否为<span class="literal">true</span>，不为<span class="literal">true</span>则<span class="built_in">return</span></span><br><span class="line">        canRun = <span class="literal">false</span>; // 立即设置为<span class="literal">false</span></span><br><span class="line">        setTimeout(() =&gt; &#123; // 将外部传入的函数的执行放在setTimeout中</span><br><span class="line">            fn.apply(this, arguments);</span><br><span class="line">            // 最后在setTimeout执行完毕后再把标记设置为<span class="literal">true</span>(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是<span class="literal">false</span>，在开头被<span class="built_in">return</span>掉</span><br><span class="line">            canRun = <span class="literal">true</span>;</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> sayHi(e) &#123;</span><br><span class="line">    console.log(e.target.innerWidth, e.target.innerHeight);</span><br><span class="line">&#125;</span><br><span class="line">window.addEventListener(<span class="string">&#x27;resize&#x27;</span>, throttle(sayHi));</span><br></pre></td></tr></table></figure>
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>需要打印相关页面区域，涉及到打印商品条码</p>
+<h3 id="依赖及使用"><a href="#依赖及使用" class="headerlink" title="依赖及使用"></a>依赖及使用</h3><p>1.生成条码，npm依赖及使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save @xkeshi/vue-barcode</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;VueBarcode :value=<span class="string">&quot;item.barCode&quot;</span> :options=<span class="string">&quot;barcode_options&quot;</span> /&gt;</span><br><span class="line">...</span><br><span class="line">import VueBarcode from <span class="string">&#x27;@xkeshi/vue-barcode&#x27;</span>;</span><br><span class="line">...</span><br><span class="line">barcode_options:&#123;</span><br><span class="line">    width:<span class="string">&#x27;1px&#x27;</span>,</span><br><span class="line">    height:<span class="string">&#x27;30px&#x27;</span>,</span><br><span class="line">    fontSize:<span class="string">&#x27;16px&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.打印区域，npm依赖及使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install print-js --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import css from <span class="string">&#x27;./printCss&#x27;</span></span><br><span class="line">import printJS from <span class="string">&#x27;print-js&#x27;</span></span><br><span class="line">...</span><br><span class="line">const style = css; //直接写样式</span><br><span class="line">printJS(&#123;</span><br><span class="line">    header:<span class="string">&quot;&quot;</span>,//标题</span><br><span class="line">    <span class="built_in">type</span>:<span class="string">&quot;&quot;</span>,//类型</span><br><span class="line">    printable:<span class="string">&quot;&quot;</span>,//区域id,</span><br><span class="line">    scanStyles: <span class="literal">false</span>,</span><br><span class="line">    style</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>注意点：vue项目里面的样式使用的scss,调取本地打印预览的时候样式都乱掉了，需要直接引入样式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> css =`</span><br><span class="line">@media <span class="built_in">print</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">`</span><br><span class="line"><span class="built_in">export</span> default css</span><br></pre></td></tr></table></figure>
+<p>同时要注意@media里面的样式不能再使用scss或者less写法,要使用css3的类名写法</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>自定义打印模板，还在研究中。。。</p>
+
       
 
       
@@ -231,7 +237,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
         		</li>
       		
 		</ul>
@@ -287,7 +297,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ktig.github.io/newBlog/2021/03/24/interviewQuestion/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ktig.github.io/newBlog/2021/03/31/print/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -304,18 +314,9 @@
   
 <nav id="article-nav">
   
-    <a href="/newBlog/2021/03/31/print/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          前端打印相关
-        
-      </div>
-    </a>
   
-  
-    <a href="/newBlog/2021/03/05/2021-03/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">2021-03知识点记录</div>
+    <a href="/newBlog/2021/03/24/interviewQuestion/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">前端面试题--慢慢啃</div>
       <i class="icon-circle-right"></i>
     </a>
   
