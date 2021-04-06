@@ -16,7 +16,7 @@
 <meta property="og:description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-24T08:35:12.424Z">
-<meta property="article:modified_time" content="2021-03-24T09:30:10.834Z">
+<meta property="article:modified_time" content="2021-04-06T08:47:29.585Z">
 <meta property="article:author" content="kuan&#96;s">
 <meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
@@ -188,6 +188,12 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> debounce(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> timeout = null; // 创建一个标记用来存放定时器的返回值</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉</span><br><span class="line">        timeout = setTimeout(() =&gt; &#123; // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数</span><br><span class="line">            fn.apply(this, arguments); // 这个地方使用this,而不直接用fn是为了解决this指向的是input而不是window</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sayHi</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;防抖成功&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">var inp = document.getElementById(<span class="string">&#x27;inp&#x27;</span>);</span><br><span class="line">inp.addEventListener(<span class="string">&#x27;input&#x27;</span>, debounce(sayHi)); // 防抖</span><br></pre></td></tr></table></figure>
 <p>节流：高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> throttle(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> canRun = <span class="literal">true</span>; // 通过闭包保存一个标记</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        <span class="keyword">if</span> (!canRun) <span class="built_in">return</span>; // 在函数开头判断标记是否为<span class="literal">true</span>，不为<span class="literal">true</span>则<span class="built_in">return</span></span><br><span class="line">        canRun = <span class="literal">false</span>; // 立即设置为<span class="literal">false</span></span><br><span class="line">        setTimeout(() =&gt; &#123; // 将外部传入的函数的执行放在setTimeout中</span><br><span class="line">            fn.apply(this, arguments);</span><br><span class="line">            // 最后在setTimeout执行完毕后再把标记设置为<span class="literal">true</span>(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是<span class="literal">false</span>，在开头被<span class="built_in">return</span>掉</span><br><span class="line">            canRun = <span class="literal">true</span>;</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> sayHi(e) &#123;</span><br><span class="line">    console.log(e.target.innerWidth, e.target.innerHeight);</span><br><span class="line">&#125;</span><br><span class="line">window.addEventListener(<span class="string">&#x27;resize&#x27;</span>, throttle(sayHi));</span><br></pre></td></tr></table></figure>
+<h3 id="4-Set、WeakSet、Map、WeakMap"><a href="#4-Set、WeakSet、Map、WeakMap" class="headerlink" title="4.Set、WeakSet、Map、WeakMap"></a>4.Set、WeakSet、Map、WeakMap</h3><p>Set:<br>本身是个对象，里面的值是唯一的，无序且不重复<br>展现方式[value,value],键值和键名是一致的<br>可以遍历，支持add，delete，has<br>注意：new Set().add(NaN).add(NaN),则会输出一个NaN,原因在于内部函数处理方式，与普遍NaN不等于NaN有区别</p>
+<p>WeakSet：<br>成员都是对象<br>成员都是弱引用，可以被垃圾回收机制回收<br>不能遍历，支持add，delete，has</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var ws &#x3D; new WeakSet()</span><br><span class="line">var obj &#x3D; &#123;&#125;</span><br><span class="line">var foo &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">ws.add(window)</span><br><span class="line">ws.add(obj)</span><br><span class="line"></span><br><span class="line">ws.has(window)	&#x2F;&#x2F; true</span><br><span class="line">ws.has(foo)	&#x2F;&#x2F; false</span><br><span class="line"></span><br><span class="line">ws.delete(window)	&#x2F;&#x2F; true</span><br><span class="line">ws.has(window)	&#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+<p>Map:<br>展现方式[key,value]<br>可遍历</p>
+<p>WeakMap：<br>只接受对象作为键名（null除外），不接受其他类型的值作为键名<br>键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的<br>不能遍历，支持get、set、has、delete</p>
+
       
 
       
@@ -450,15 +456,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
               </li>
             
             <div class="clearfix"></div>
