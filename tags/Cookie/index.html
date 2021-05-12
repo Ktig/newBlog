@@ -6,19 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Ktig.github.io/newBlog">
-  <title>前端面试题--慢慢啃 | Kuan`s Hexo Blog</title>
+  <title>Tag: Cookie | Kuan`s Hexo Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
-<meta property="og:type" content="article">
-<meta property="og:title" content="前端面试题--慢慢啃">
-<meta property="og:url" content="https://ktig.github.io/newBlog/2021/03/24/interviewQuestion/index.html">
+  <meta name="description" content="点滴记录，前端心得">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kuan&#96;s Hexo Blog">
+<meta property="og:url" content="https://ktig.github.io/newBlog/tags/Cookie/index.html">
 <meta property="og:site_name" content="Kuan&#96;s Hexo Blog">
-<meta property="og:description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
+<meta property="og:description" content="点滴记录，前端心得">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-24T08:35:12.424Z">
-<meta property="article:modified_time" content="2021-04-08T08:05:33.307Z">
 <meta property="article:author" content="kuan&#96;s">
-<meta property="article:tag" content="面试题">
+<meta property="article:tag" content="Vue Javascript HTML">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Kuan`s Hexo Blog" type="application/atom+xml">
@@ -161,252 +159,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-interviewQuestion" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      前端面试题--慢慢啃
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/newBlog/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/newBlog/2021/05/12/cookie/" class="archive-article-date">
+  	<time datetime="2021-05-12T01:53:03.551Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/newBlog/2021/05/12/cookie/">如何更改Cookie的domain属性</a>
     </h1>
   
 
-        
-        <a href="/newBlog/2021/03/24/interviewQuestion/" class="archive-article-date">
-  	<time datetime="2021-03-24T08:35:12.424Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？"><a href="#1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？" class="headerlink" title="1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？"></a>1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？</h3><p>vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。<br>在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key =&gt; index 的map映射），如果没找到就认为是一个新增节点。<br>而如果没有key，那么就会采用遍历查找的方式去找到对应的旧节点。<br>一种一个map映射，另一种是遍历查找。相比而言，map映射的速度更快。<br>另一种情况，对于一些简单的场景，在渲染速度上，没有key确实比有key值得渲染速度更快，原因是对这些节点就地复用，省去了依赖key值增删对比所用的耗时<br>例子：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div v-for=<span class="string">&quot;i in dataList&quot;</span>&gt;&#123;&#123; i &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-‘1’-‘2’-‘3’-map-parseInt"><a href="#2-‘1’-‘2’-‘3’-map-parseInt" class="headerlink" title="2.[‘1’, ‘2’, ‘3’].map(parseInt)"></a>2.[‘1’, ‘2’, ‘3’].map(parseInt)</h3><p>看似简单，其实坑多，最重要的还是要理解parseInt这个函数的本质<br>parseInt接受两个参数(string,radix),其中radix代表的是进制的意思<br>其中string对应map的第一个参数item<br>radix对应map的第二个参数index<br>官方文档解释：如果radix省略或者为0，则按照10进制去解析，所以：<br>parseInt(1,0)，输出1<br>parseInt(2,1)，输出NaN，因为1进制只允许0,1<br>parseInt(3,2)，输出NaN，因为2进制只允许0,1,2</p>
-<h3 id="3-防抖和节流"><a href="#3-防抖和节流" class="headerlink" title="3.防抖和节流"></a>3.防抖和节流</h3><p>防抖：触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> debounce(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> timeout = null; // 创建一个标记用来存放定时器的返回值</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉</span><br><span class="line">        timeout = setTimeout(() =&gt; &#123; // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数</span><br><span class="line">            fn.apply(this, arguments); // 这个地方使用this,而不直接用fn是为了解决this指向的是input而不是window</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sayHi</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;防抖成功&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">var inp = document.getElementById(<span class="string">&#x27;inp&#x27;</span>);</span><br><span class="line">inp.addEventListener(<span class="string">&#x27;input&#x27;</span>, debounce(sayHi)); // 防抖</span><br></pre></td></tr></table></figure>
-<p>节流：高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> throttle(fn) &#123;</span><br><span class="line">    <span class="built_in">let</span> canRun = <span class="literal">true</span>; // 通过闭包保存一个标记</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        <span class="keyword">if</span> (!canRun) <span class="built_in">return</span>; // 在函数开头判断标记是否为<span class="literal">true</span>，不为<span class="literal">true</span>则<span class="built_in">return</span></span><br><span class="line">        canRun = <span class="literal">false</span>; // 立即设置为<span class="literal">false</span></span><br><span class="line">        setTimeout(() =&gt; &#123; // 将外部传入的函数的执行放在setTimeout中</span><br><span class="line">            fn.apply(this, arguments);</span><br><span class="line">            // 最后在setTimeout执行完毕后再把标记设置为<span class="literal">true</span>(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是<span class="literal">false</span>，在开头被<span class="built_in">return</span>掉</span><br><span class="line">            canRun = <span class="literal">true</span>;</span><br><span class="line">        &#125;, 500);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> sayHi(e) &#123;</span><br><span class="line">    console.log(e.target.innerWidth, e.target.innerHeight);</span><br><span class="line">&#125;</span><br><span class="line">window.addEventListener(<span class="string">&#x27;resize&#x27;</span>, throttle(sayHi));</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="4-Set、WeakSet、Map、WeakMap"><a href="#4-Set、WeakSet、Map、WeakMap" class="headerlink" title="4.Set、WeakSet、Map、WeakMap"></a>4.Set、WeakSet、Map、WeakMap</h3><p>Set:<br>本身是个对象，里面的值是唯一的，无序且不重复<br>展现方式[value,value],键值和键名是一致的<br>可以遍历，支持add，delete，has<br>注意：new Set().add(NaN).add(NaN),则会输出一个NaN,原因在于内部函数处理方式，与普遍NaN不等于NaN有区别</p>
-<p>WeakSet：<br>成员都是对象<br>成员都是弱引用，可以被垃圾回收机制回收<br>不能遍历，支持add，delete，has</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> <span class="built_in">WeakSet</span>()</span><br><span class="line"><span class="keyword">var</span> obj = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> foo = &#123;&#125;</span><br><span class="line"></span><br><span class="line">ws.add(<span class="built_in">window</span>)</span><br><span class="line">ws.add(obj)</span><br><span class="line"></span><br><span class="line">ws.has(<span class="built_in">window</span>)	<span class="comment">// true</span></span><br><span class="line">ws.has(foo)	<span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">ws.delete(<span class="built_in">window</span>)	<span class="comment">// true</span></span><br><span class="line">ws.has(<span class="built_in">window</span>)	<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p>Map:<br>展现方式[key,value]<br>可遍历</p>
-<p>WeakMap：<br>只接受对象作为键名（null除外），不接受其他类型的值作为键名<br>键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的<br>不能遍历，支持get、set、has、delete</p>
-<h3 id="5-ES5-ES6的继承的区别"><a href="#5-ES5-ES6的继承的区别" class="headerlink" title="5.ES5/ES6的继承的区别"></a>5.ES5/ES6的继承的区别</h3><p>ES5:<br>最常见的继承：原型链继承、构造函数继承<br>原型链继承：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义父类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义子类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Children</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.age = <span class="number">24</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过Children的prototype属性和Parent进行关联继承</span></span><br><span class="line"></span><br><span class="line">Children.prototype = <span class="keyword">new</span> Parent(<span class="string">&#x27;陈先生&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Children.prototype.constructor === Parent.prototype.constructor = Parent</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">new</span> Children();</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.constructor === Children.prototype.constructor === Parent</span></span><br><span class="line"></span><br><span class="line">test.age <span class="comment">// 24</span></span><br><span class="line">test.getName(); <span class="comment">// 陈先生</span></span><br></pre></td></tr></table></figure>
-<p>构造函数继承：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 定义父类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.language = [<span class="string">&#x27;javascript&#x27;</span>, <span class="string">&#x27;react&#x27;</span>, <span class="string">&#x27;node.js&#x27;</span>];</span><br><span class="line">    <span class="built_in">this</span>.value = value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义子类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Children</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    Parent.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> test = <span class="keyword">new</span> Children(<span class="number">666</span>);</span><br><span class="line"></span><br><span class="line">test.language <span class="comment">// [&#x27;javascript&#x27;, &#x27;react&#x27;, &#x27;node.js&#x27;]</span></span><br><span class="line">test.value <span class="comment">// 666</span></span><br></pre></td></tr></table></figure>
-<p>ES6:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 定义父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, age</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">show</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`我叫:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>， 今年<span class="subst">$&#123;<span class="built_in">this</span>.age&#125;</span>岁`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过extends关键字实现继承</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">Father</span> </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> son = <span class="keyword">new</span> Son(<span class="string">&#x27;陈先生&#x27;</span>, <span class="number">30</span>);</span><br><span class="line"></span><br><span class="line">son.show(); <span class="comment">// 我叫陈先生 今年30岁</span></span><br></pre></td></tr></table></figure>
-<p>总结：区别于ES5的继承，ES6的继承实现在于使用super关键字调用父类，反观ES5是通过call或者apply回调方法调用父类</p>
-<h3 id="6-setTimeout、Promise、Async-Await-的区别-JS事件循环"><a href="#6-setTimeout、Promise、Async-Await-的区别-JS事件循环" class="headerlink" title="6.setTimeout、Promise、Async/Await 的区别 (JS事件循环)"></a>6.setTimeout、Promise、Async/Await 的区别 (JS事件循环)</h3><p>JS事件循环分为宏任务队列和微任务队列：<br>settimeout的回调函数放到宏任务队列里，等到执行栈清空以后执行；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;settimeout&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>)</span><br><span class="line"><span class="comment">// 输出顺序：script start-&gt;script end-&gt;settimeout</span></span><br></pre></td></tr></table></figure>
-<p>promise.then里的回调函数会放到相应宏任务的微任务队列里，等宏任务里面的同步代码执行完再执行；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise1&#x27;</span>)</span><br><span class="line">    resolve()</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise1 end&#x27;</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise2&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;settimeout&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>)</span><br><span class="line"><span class="comment">// 输出顺序: script start-&gt;promise1-&gt;promise1 end-&gt;script end-&gt;promise2-&gt;settimeout</span></span><br></pre></td></tr></table></figure>
-<p>async函数表示函数里面可能会有异步方法，await后面跟一个表达式，async方法执行时，遇到await会立即执行表达式，然后把表达式后面的代码放到微任务队列里，让出执行栈让同步代码先执行。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">&#x27;async1 start&#x27;</span>);</span><br><span class="line">    <span class="keyword">await</span> async2();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;async1 end&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;async2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>);</span><br><span class="line">async1();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>)</span><br><span class="line"><span class="comment">// 输出顺序：script start-&gt;async1 start-&gt;async2-&gt;script end-&gt;async1 end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>延伸：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;async1 start&#x27;</span>);</span><br><span class="line">	<span class="keyword">await</span> async2();</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;async1 end&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>等价于</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;async1 start&#x27;</span>);</span><br><span class="line">	<span class="built_in">Promise</span>.resolve(async2()).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;async1 end&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="7-ES6-认识Iterator-Iterable-Generator"><a href="#7-ES6-认识Iterator-Iterable-Generator" class="headerlink" title="7.ES6 - 认识Iterator, Iterable, Generator"></a>7.ES6 - 认识Iterator, Iterable, Generator</h3><p>Iterator:<br>Iterator是一个具有<code>next</code>方法的对象，它存在的目的是为了改善遍历的体验.<br><code>next</code>方法返回一个对象，这个对象有两个属性：<code>value</code>和<code>done</code>，其中<code>done</code>是一个布尔值，表明遍历是否结束。在每一个iterator内部有一个指向其内部数据集合的指针，表明当前遍历的位置。所以每当调用<code>next</code>方法时，都会根据这个指针所在的位置返回正确的数据。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createIterator</span>(<span class="params">items</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">let</span> done = i &gt;= items.length </span><br><span class="line">      <span class="keyword">let</span> value = !done ? items[i] : <span class="literal">undefined</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          value,</span><br><span class="line">          done</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Generators:<br>Generator返回一个iterator。Generator函数的<code>function</code>关键字和括号之间有一个<code>*</code>，用以区分generator和普通函数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">createIterator</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterator = createIterator()</span><br><span class="line">iterator.next() <span class="comment">// 3</span></span><br><span class="line">iterator.next() <span class="comment">// 2</span></span><br><span class="line">iterator.next() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>关于generator最重要的一点是，在下一个<code>next</code>方法被调用之前，函数执行流会在相应的yield之间中止（不被执行）。这就是所谓的“按需执行”，提高了效率。</p>
-</blockquote>
-<p>Iterables:<br>Iterable是一个具有Symbol.iterator属性的对象。这个属性是一个函数，返回一个iterator。 在ES6中，所有的集合类对象(arrays, sets, and maps) 和strings都是iterable。</p>
-<blockquote>
-<p>所有由generator生成的iterator本身也是一个iterable。generator函数内部自动将<code>Symbol.iterator</code>这个属性赋予给了iterator。<br>Iterable的存在是为了配合使用ES6的新遍历方式——<code>for...of</code>。它的执行原理是这样的：在使用<code>for of</code>遍历iterable时，首先会调用iterable内置的<code>Symbol.iterator</code>方法，产生一个iterator，然后在每一轮遍历中，调用iterator的next方法，得到具体的值。这个遍历过程直到next返回的对象的<code>done</code>为true。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> collection = &#123;</span><br><span class="line">  items: [],</span><br><span class="line">  *[<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> items) &#123;</span><br><span class="line">       <span class="keyword">yield</span> item</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">collection.items.push(<span class="number">1</span>);</span><br><span class="line">collection.items.push(<span class="number">2</span>);</span><br><span class="line">collection.items.push(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> x <span class="keyword">of</span> collection) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1, 2, 3</span></span><br></pre></td></tr></table></figure>
-<p>怎样判断一个对象是否是一个iterable呢？</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIterable</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> o[<span class="built_in">Symbol</span>.iterator] === <span class="string">&#x27;function&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="8-JS-异步解决方案的发展历程以及优缺点"><a href="#8-JS-异步解决方案的发展历程以及优缺点" class="headerlink" title="8.JS 异步解决方案的发展历程以及优缺点"></a>8.JS 异步解决方案的发展历程以及优缺点</h3><p>回调函数（callback）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ajax(<span class="string">&#x27;XXX1&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// callback 函数体</span></span><br><span class="line">    ajax(<span class="string">&#x27;XXX2&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// callback 函数体</span></span><br><span class="line">        ajax(<span class="string">&#x27;XXX3&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// callback 函数体</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>优点：解决了同步的问题<br>缺点：层层嵌套，回调地狱</p>
-<p>promise:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ajax(<span class="string">&#x27;XXX1&#x27;</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 操作逻辑</span></span><br><span class="line">      <span class="keyword">return</span> ajax(<span class="string">&#x27;XXX2&#x27;</span>)</span><br><span class="line">  &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 操作逻辑</span></span><br><span class="line">      <span class="keyword">return</span> ajax(<span class="string">&#x27;XXX3&#x27;</span>)</span><br><span class="line">  &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 操作逻辑</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<p>优点：解决了回调地狱的问题<br>缺点：无法取消Promise，一旦开启只有pending resolve reject 不能取消，错误需要通过回调函数来捕获</p>
-<p>Generator：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">fetch</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">yield</span> ajax(<span class="string">&#x27;XXX1&#x27;</span>, <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="keyword">yield</span> ajax(<span class="string">&#x27;XXX2&#x27;</span>, <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="keyword">yield</span> ajax(<span class="string">&#x27;XXX3&#x27;</span>, <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> it = fetch()</span><br><span class="line"><span class="keyword">let</span> result1 = it.next()</span><br><span class="line"><span class="keyword">let</span> result2 = it.next()</span><br><span class="line"><span class="keyword">let</span> result3 = it.next()</span><br></pre></td></tr></table></figure>
-<p>优点：可以控制函数的执行</p>
-<p>async/await:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 以下代码没有依赖性的话，完全可以使用 Promise.all 的方式</span></span><br><span class="line">  <span class="comment">// 如果有依赖性的话，其实就是解决回调地狱的例子了</span></span><br><span class="line">  <span class="keyword">await</span> fetch(<span class="string">&#x27;XXX1&#x27;</span>)</span><br><span class="line">  <span class="keyword">await</span> fetch(<span class="string">&#x27;XXX2&#x27;</span>)</span><br><span class="line">  <span class="keyword">await</span> fetch(<span class="string">&#x27;XXX3&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>优点：代码清晰，不用像 Promise 写一大堆 then 链，处理了回调地狱的问题<br>缺点：await 将异步代码改造成同步代码，如果多个异步操作没有依赖性而使用 await 会导致性能上的降低。</p>
-<h3 id="9-谈谈你对-TCP-三次握手和四次挥手的理解"><a href="#9-谈谈你对-TCP-三次握手和四次挥手的理解" class="headerlink" title="9.谈谈你对 TCP 三次握手和四次挥手的理解"></a>9.谈谈你对 TCP 三次握手和四次挥手的理解</h3><p>三次握手：<br>A（客户端）：你好，我是A<br>B（服务端）：收到，我是B<br>A（客户端）：咱们开始建立连接了</p>
-<p>四次挥手：<br>A（客户端）：你好，我要关了<br>B（服务端）：稍等下，还有东西再传输，…，我已经好了，随时可以关闭<br>A（客户端）：你关闭吧，不用再回复我了，同时等待2MSL,无回复后关闭（2ML:报文最大生存时间的两倍）<br>B（服务端）：关闭</p>
-<p>为什么是三次握手？<br>三次是最少的安全次数，两次不安全，四次浪费资源。</p>
-<p>为什么是四次挥手？</p>
-<p>TCP是全双工信道，何为全双工就是客户端与服务端建立两条通道，通道1:客户端的输出连接服务端的输入；通道2:客户端的输入连接服务端的输出。<br>两个通道可以同时工作，客户端向服务端发送信号的同时服务端也可以向客户端发送信号。</p>
-<p>所以关闭双通道的时候就是这样：</p>
-<p>客户端：我要关闭输入通道了。<br>服务端：好的，你关闭吧，我这边也关闭这个通道。</p>
-<p>服务端：我也要关闭输入通道了。<br>客户端：好的你关闭吧，我也把这个通道关闭。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/newBlog/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/newBlog/img/wxpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Cookie</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ktig.github.io/newBlog/2021/03/24/interviewQuestion/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/newBlog/2021/03/31/print/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          前端打印相关
-        
-      </div>
-    </a>
   
   
-    <a href="/newBlog/2021/03/05/2021-03/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">2021-03知识点记录</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -430,9 +236,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
