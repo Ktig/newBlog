@@ -16,7 +16,7 @@
 <meta property="og:description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-24T08:35:12.424Z">
-<meta property="article:modified_time" content="2021-04-08T08:05:33.307Z">
+<meta property="article:modified_time" content="2021-09-23T07:06:27.693Z">
 <meta property="article:author" content="kuan&#96;s">
 <meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
@@ -245,6 +245,19 @@
 <p>所以关闭双通道的时候就是这样：</p>
 <p>客户端：我要关闭输入通道了。<br>服务端：好的，你关闭吧，我这边也关闭这个通道。</p>
 <p>服务端：我也要关闭输入通道了。<br>客户端：好的你关闭吧，我也把这个通道关闭。</p>
+<h3 id="10-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray"><a href="#10-有以下-3-个判断数组的方法，请分别介绍它们之间的区别和优劣Object-prototype-toString-call-、-instanceof-以及-Array-isArray" class="headerlink" title="10.有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()"></a>10.有以下 3 个判断数组的方法，请分别介绍它们之间的区别和优劣Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()</h3><ul>
+<li>Object.prototype.toString.call()</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.toString.call(<span class="string">&#x27;An&#x27;</span>) // <span class="string">&quot;[object String]&quot;</span></span><br><span class="line">Object.prototype.toString.call(1) // <span class="string">&quot;[object Number]&quot;</span></span><br><span class="line">Object.prototype.toString.call(Symbol(1)) // <span class="string">&quot;[object Symbol]&quot;</span></span><br><span class="line">Object.prototype.toString.call(null) // <span class="string">&quot;[object Null]&quot;</span></span><br><span class="line">Object.prototype.toString.call(undefined) // <span class="string">&quot;[object Undefined]&quot;</span></span><br><span class="line">Object.prototype.toString.call(<span class="function"><span class="title">function</span></span>()&#123;&#125;) // <span class="string">&quot;[object Function]&quot;</span></span><br><span class="line">Object.prototype.toString.call(&#123;name: <span class="string">&#x27;An&#x27;</span>&#125;) // <span class="string">&quot;[object Object]&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>instanceof</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[] instanceof Array; // <span class="literal">true</span></span><br><span class="line">[] instanceof Object; // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Array.isArray()</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var iframe = document.createElement(<span class="string">&#x27;iframe&#x27;</span>);</span><br><span class="line">document.body.appendChild(iframe);</span><br><span class="line">xArray = window.frames[window.frames.length-1].Array;</span><br><span class="line">var arr = new xArray(1,2,3); // [1,2,3]</span><br><span class="line"></span><br><span class="line">Array.isArray(arr);  // <span class="literal">true</span></span><br><span class="line">Object.prototype.toString.call(arr); // <span class="literal">true</span></span><br><span class="line">arr instanceof Array; // <span class="literal">false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>性能方面：Array.isArray &gt; instanceof &gt; Object.prototype.toString.call()</p>
 
       
 
@@ -533,6 +546,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">React</a>
               </li>
             
             <div class="clearfix"></div>
