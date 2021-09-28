@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Ktig.github.io/newBlog">
-  <title>Archives: 2021/9 | Kuan`s Hexo Blog</title>
+  <title>前端面试题--其他 | Kuan`s Hexo Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="点滴记录，前端心得">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kuan&#96;s Hexo Blog">
-<meta property="og:url" content="https://ktig.github.io/newBlog/archives/2021/09/index.html">
+  <meta name="description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题--其他">
+<meta property="og:url" content="https://ktig.github.io/newBlog/2021/09/28/question-other/index.html">
 <meta property="og:site_name" content="Kuan&#96;s Hexo Blog">
-<meta property="og:description" content="点滴记录，前端心得">
+<meta property="og:description" content="1.写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key &#x3D;&gt; index 的map映射），如果没找到就认为是一个新增节点。而如果没有key，那么就会">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-28T01:55:11.300Z">
+<meta property="article:modified_time" content="2021-09-28T02:11:52.072Z">
 <meta property="article:author" content="kuan&#96;s">
-<meta property="article:tag" content="Vue Javascript HTML">
+<meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Kuan`s Hexo Blog" type="application/atom+xml">
@@ -159,36 +161,105 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-question-other" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      前端面试题--其他
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/newBlog/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/newBlog/2021/09/28/question-other/" class="archive-article-date">
+
+        
+        <a href="/newBlog/2021/09/28/question-other/" class="archive-article-date">
   	<time datetime="2021-09-28T01:55:11.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-28</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/newBlog/2021/09/28/question-other/">前端面试题--其他</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？"><a href="#1-写-React-Vue-项目时为什么要在列表组件中写-key，其作用是什么？" class="headerlink" title="1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？"></a>1.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？</h3><p>vue和react都是采用diff算法来对比新旧虚拟节点，从而更新节点。<br>在交叉对比中，当新节点跟旧节点头尾交叉对比没有结果时，会根据新节点的key去对比旧节点数组中的key，从而找到相应旧节点（这里对应的是一个key =&gt; index 的map映射），如果没找到就认为是一个新增节点。<br>而如果没有key，那么就会采用遍历查找的方式去找到对应的旧节点。<br>一种一个map映射，另一种是遍历查找。相比而言，map映射的速度更快。<br>另一种情况，对于一些简单的场景，在渲染速度上，没有key确实比有key值得渲染速度更快，原因是对这些节点就地复用，省去了依赖key值增删对比所用的耗时<br>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div v-for=<span class="string">&quot;i in dataList&quot;</span>&gt;&#123;&#123; i &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-谈谈你对-TCP-三次握手和四次挥手的理解"><a href="#2-谈谈你对-TCP-三次握手和四次挥手的理解" class="headerlink" title="2.谈谈你对 TCP 三次握手和四次挥手的理解"></a>2.谈谈你对 TCP 三次握手和四次挥手的理解</h3><ul>
+<li><strong>三次握手：</strong></li>
+</ul>
+<p>A（客户端）：你好，我是A<br>B（服务端）：收到，我是B<br>A（客户端）：咱们开始建立连接了</p>
+<ul>
+<li><strong>四次挥手：</strong></li>
+</ul>
+<p>A（客户端）：你好，我要关了<br>B（服务端）：稍等下，还有东西再传输，…，我已经好了，随时可以关闭<br>A（客户端）：你关闭吧，不用再回复我了，同时等待2MSL,无回复后关闭（2ML:报文最大生存时间的两倍）<br>B（服务端）：关闭</p>
+<p>为什么是三次握手？<br>三次是最少的安全次数，两次不安全，四次浪费资源。</p>
+<p>为什么是四次挥手？</p>
+<p>TCP是全双工信道，何为全双工就是客户端与服务端建立两条通道，通道1:客户端的输出连接服务端的输入；通道2:客户端的输入连接服务端的输出。<br>两个通道可以同时工作，客户端向服务端发送信号的同时服务端也可以向客户端发送信号。</p>
+<p>所以关闭双通道的时候就是这样：</p>
+<p>客户端：我要关闭输入通道了。<br>服务端：好的，你关闭吧，我这边也关闭这个通道。</p>
+<p>服务端：我也要关闭输入通道了。<br>客户端：好的你关闭吧，我也把这个通道关闭。</p>
+<h3 id="3-重绘和回流"><a href="#3-重绘和回流" class="headerlink" title="3.重绘和回流"></a>3.重绘和回流</h3><ul>
+<li><strong>浏览器的渲染过程</strong></li>
+</ul>
+<p>解析HTML，生成DOM树，解析CSS，生成CSSOM树<br>将DOM树和CSSOM树结合，生成渲染树(Render Tree)<br>Layout(回流):根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）<br>Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素<br>Display:将像素发送给GPU，展示在页面上。</p>
+<ul>
+<li><strong>何时发生回流重绘</strong></li>
+</ul>
+<p>添加或删除可见的DOM元素<br>元素的位置发生变化<br>元素的尺寸发生变化（包括外边距、内边框、边框大小、高度和宽度等）<br>内容发生变化，比如文本变化或图片被另一个不同尺寸的图片所替代。<br>页面一开始渲染的时候（这肯定避免不了）<br>浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）</p>
+<ul>
+<li><strong>减少回流和重绘（脱离文档流）</strong></li>
+</ul>
+<p>例子：插入元素</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> appendDataToElement(appendToElement, data) &#123;</span><br><span class="line">    <span class="built_in">let</span> li;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">let</span> i = 0; i &lt; data.length; i++) &#123;</span><br><span class="line">    	li = document.createElement(<span class="string">&#x27;li&#x27;</span>);</span><br><span class="line">        li.textContent = <span class="string">&#x27;text&#x27;</span>;</span><br><span class="line">        appendToElement.appendChild(li);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const ul = document.getElementById(<span class="string">&#x27;list&#x27;</span>);</span><br><span class="line">appendDataToElement(ul, data);</span><br></pre></td></tr></table></figure>
+<p>解决方法1：隐藏元素，应用修改，重新显示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">const ul = document.getElementById(<span class="string">&#x27;list&#x27;</span>);</span><br><span class="line">ul.style.display = <span class="string">&#x27;none&#x27;</span>;</span><br><span class="line">appendDataToElement(ul, data);</span><br><span class="line">ul.style.display = <span class="string">&#x27;block&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>解决方法2：使用文档片段(document fragment)在当前DOM之外构建一个子树，再把它拷贝回文档</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">const ul = document.getElementById(<span class="string">&#x27;list&#x27;</span>);</span><br><span class="line">const fragment = document.createDocumentFragment();</span><br><span class="line">appendDataToElement(fragment, data);</span><br><span class="line">ul.appendChild(fragment);</span><br></pre></td></tr></table></figure>
+<p>解决方法3：将原始元素拷贝到一个脱离文档的节点中，修改节点后，再替换原始的元素</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">const ul = document.getElementById(<span class="string">&#x27;list&#x27;</span>);</span><br><span class="line">const <span class="built_in">clone</span> = ul.cloneNode(<span class="literal">true</span>);</span><br><span class="line">appendDataToElement(<span class="built_in">clone</span>, data);</span><br><span class="line">ul.parentNode.replaceChild(<span class="built_in">clone</span>, ul);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>不需要回流重绘（CSS3硬件加速）</strong></li>
+</ul>
+<p>transform、opacity、filters等</p>
+<h3 id="4-介绍一个观察者模式和订阅-发布模式的区别"><a href="#4-介绍一个观察者模式和订阅-发布模式的区别" class="headerlink" title="4.介绍一个观察者模式和订阅-发布模式的区别"></a>4.介绍一个观察者模式和订阅-发布模式的区别</h3><p>观察者模式中，主体和观察者是相互感知的，是一种强关联关系<br>订阅-发布模式是观察者模式的一种变体，需要内部changeManager去处理,是一种弱关联关系<br>可以抽象为A写了文章，B可以直接看；A写了文章，要发布到平台，然后B再通过平台去看</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/newBlog/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/newBlog/img/wxpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,99 +271,109 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ktig.github.io/newBlog/2021/09/28/question-other/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/newBlog/2021/09/23/question-react/" class="archive-article-date">
-  	<time datetime="2021-09-23T06:13:35.103Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/newBlog/2021/09/23/question-react/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">前端面试题--React</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/newBlog/2021/09/23/question-react/">前端面试题--React</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">React</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/newBlog/2021/09/23/html-string/" class="archive-article-date">
-  	<time datetime="2021-09-23T03:15:15.305Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/newBlog/2021/09/23/html-string/">关于HTML里面onclick传参问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -316,8 +397,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
