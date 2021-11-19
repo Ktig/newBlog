@@ -161,6 +161,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-vue-router" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2021/11/19/vue-router/">vue-router之keep-alive问题</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2021/11/19/vue-router/" class="archive-article-date">
+  	<time datetime="2021-11-19T08:45:10.716Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>后台打开菜单，切换已经打开过的菜单的时候，要求保留页面状态，关闭之后再打开，需要重置为原始状态</p>
+<h3 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h3><p>1.include属性的应用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive :include=<span class="string">&quot;cachedViews&quot;</span>&gt;</span><br><span class="line">    &lt;router-view :key=<span class="string">&quot;key&quot;</span> /&gt;</span><br><span class="line">&lt;/keep-alive&gt;</span><br><span class="line">...</span><br><span class="line">cachedViews:this.<span class="variable">$store</span>.state.tagsView.cachedViews</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>2.store相关配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">const state = &#123;</span><br><span class="line">    visitedViews:[],</span><br><span class="line">    cachedViews: []</span><br><span class="line">&#125;</span><br><span class="line">const mutations = &#123;</span><br><span class="line">    ADD_VISITED_VIEW: (state, view) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (state.visitedViews.some(v =&gt; v.path === view.path)) <span class="built_in">return</span></span><br><span class="line">        state.visitedViews.push(</span><br><span class="line">            Object.assign(&#123;&#125;, view, &#123;</span><br><span class="line">                title: view.meta.title || <span class="string">&#x27;no-name&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">        )</span><br><span class="line">    &#125;,</span><br><span class="line">    ADD_CACHED_VIEW: (state, view) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (state.cachedViews.includes(view.name)) <span class="built_in">return</span></span><br><span class="line">        <span class="keyword">if</span> (!view.meta.noCache) &#123;</span><br><span class="line">            state.cachedViews.push(view.name)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    DEL_VISITED_VIEW: (state, view) =&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (const [i, v] of state.visitedViews.entries()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v.path === view.path) &#123;</span><br><span class="line">                state.visitedViews.splice(i, 1)</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    DEL_CACHED_VIEW: (state, view) =&gt; &#123;</span><br><span class="line">        const index = state.cachedViews.indexOf(view.name)</span><br><span class="line">        index &gt; -1 &amp;&amp; state.cachedViews.splice(index, 1)</span><br><span class="line">    &#125;,</span><br><span class="line">    UPDATE_VISITED_VIEW: (state, view) =&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">let</span> v of state.visitedViews) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v.path === view.path) &#123;</span><br><span class="line">                v = Object.assign(v, view)</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">const actions = &#123;</span><br><span class="line">    addView(&#123; dispatch &#125;, view) &#123;</span><br><span class="line">        dispatch(<span class="string">&#x27;addVisitedView&#x27;</span>, view)</span><br><span class="line">        dispatch(<span class="string">&#x27;addCachedView&#x27;</span>, view)</span><br><span class="line">    &#125;,</span><br><span class="line">    addVisitedView(&#123; commit &#125;, view) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;ADD_VISITED_VIEW&#x27;</span>, view)</span><br><span class="line">    &#125;,</span><br><span class="line">    addCachedView(&#123; commit &#125;, view) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;ADD_CACHED_VIEW&#x27;</span>, view)</span><br><span class="line">    &#125;,</span><br><span class="line">    delView(&#123; dispatch, state &#125;, view) &#123;</span><br><span class="line">        <span class="built_in">return</span> new Promise(resolve =&gt; &#123;</span><br><span class="line">            dispatch(<span class="string">&#x27;delVisitedView&#x27;</span>, view)</span><br><span class="line">            dispatch(<span class="string">&#x27;delCachedView&#x27;</span>, view)</span><br><span class="line">            resolve(&#123;</span><br><span class="line">                cachedViews: [...state.cachedViews]</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    delVisitedView(&#123; commit, state &#125;, view) &#123;</span><br><span class="line">        <span class="built_in">return</span> new Promise(resolve =&gt; &#123;</span><br><span class="line">            commit(<span class="string">&#x27;DEL_VISITED_VIEW&#x27;</span>, view)</span><br><span class="line">            resolve([...state.visitedViews])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    delCachedView(&#123; commit, state &#125;, view) &#123;</span><br><span class="line">        <span class="built_in">return</span> new Promise(resolve =&gt; &#123;</span><br><span class="line">            commit(<span class="string">&#x27;DEL_CACHED_VIEW&#x27;</span>, view)</span><br><span class="line">            resolve([...state.cachedViews])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    updateVisitedView(&#123; commit &#125;, view) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;UPDATE_VISITED_VIEW&#x27;</span>, view)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> default &#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  actions</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3.组件页面交互</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link</span><br><span class="line">    v-for=<span class="string">&quot;tag in visitedViews&quot;</span></span><br><span class="line">    ref=<span class="string">&quot;tag&quot;</span></span><br><span class="line">    :key=<span class="string">&quot;tag.path&quot;</span></span><br><span class="line">    :class=<span class="string">&quot;isActive(tag)?&#x27;active&#x27;:&#x27;&#x27;&quot;</span></span><br><span class="line">    :to=<span class="string">&quot;&#123; path: tag.path, query: tag.query, fullPath: tag.fullPath &#125;&quot;</span></span><br><span class="line">    tag=<span class="string">&quot;span&quot;</span></span><br><span class="line">    class=<span class="string">&quot;tags-view-item&quot;</span></span><br><span class="line">    @click.middle.native=<span class="string">&quot;!isAffix(tag)?closeSelectedTag(tag):&#x27;&#x27;&quot;</span></span><br><span class="line">    @contextmenu.prevent.native=<span class="string">&quot;openMenu(tag,<span class="variable">$event</span>)&quot;</span></span><br><span class="line">&gt;</span><br><span class="line">    &#123;&#123; tag.title &#125;&#125;</span><br><span class="line">    &lt;span v-if=<span class="string">&quot;!isAffix(tag)&quot;</span> class=<span class="string">&quot;el-icon-close&quot;</span> @click.prevent.stop=<span class="string">&quot;closeSelectedTag(tag)&quot;</span> /&gt;</span><br><span class="line">&lt;/router-link&gt;</span><br><span class="line">...</span><br><span class="line">watch:&#123;</span><br><span class="line">    <span class="variable">$route</span>() &#123;</span><br><span class="line">        this.addTags()</span><br><span class="line">        this.moveToCurrentTag()</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">isActive(route) &#123;</span><br><span class="line">    <span class="built_in">return</span> route.path === this.<span class="variable">$route</span>.path</span><br><span class="line">&#125;,</span><br><span class="line">isAffix(tag) &#123;</span><br><span class="line">    <span class="built_in">return</span> tag.meta &amp;&amp; tag.meta.affix</span><br><span class="line">&#125;,</span><br><span class="line"><span class="function"><span class="title">moveToCurrentTag</span></span>() &#123;</span><br><span class="line">    const tags = this.<span class="variable">$refs</span>.tag</span><br><span class="line">    this.<span class="variable">$nextTick</span>(() =&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (const tag of tags) &#123;</span><br><span class="line">            <span class="keyword">if</span> (tag.to.path === this.<span class="variable">$route</span>.path) &#123;</span><br><span class="line">                this.<span class="variable">$refs</span>.scrollPane.moveToTarget(tag)</span><br><span class="line">                // when query is different <span class="keyword">then</span> update</span><br><span class="line">                <span class="keyword">if</span> (tag.to.fullPath !== this.<span class="variable">$route</span>.fullPath) &#123;</span><br><span class="line">                    this.<span class="variable">$store</span>.dispatch(<span class="string">&#x27;tagsView/updateVisitedView&#x27;</span>, this.<span class="variable">$route</span>)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br><span class="line">closeSelectedTag(view) &#123;</span><br><span class="line">    this.<span class="variable">$store</span>.dispatch(<span class="string">&#x27;tagsView/delView&#x27;</span>, view).<span class="keyword">then</span>((&#123; visitedViews &#125;) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (this.isActive(view)) &#123;</span><br><span class="line">            this.toLastView(visitedViews, view)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br><span class="line">toLastView(visitedViews, view) &#123;</span><br><span class="line">    const latestView = visitedViews.slice(-1)[0]</span><br><span class="line">    <span class="keyword">if</span> (latestView) &#123;</span><br><span class="line">        this.<span class="variable">$router</span>.push(latestView.fullPath)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        // now the default is to redirect to the home page <span class="keyword">if</span> there is no tags-view,</span><br><span class="line">        // you can adjust it according to your needs.</span><br><span class="line">        <span class="keyword">if</span> (view.name === <span class="string">&#x27;Dashboard&#x27;</span>) &#123;</span><br><span class="line">            // to reload home page</span><br><span class="line">            this.<span class="variable">$router</span>.replace(&#123; path: <span class="string">&#x27;/redirect&#x27;</span> + view.fullPath &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            this.<span class="variable">$router</span>.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>在配置router路径的时候，因为include里面value是记录缓存的页面的name，<strong>该name是组件的name，不是router文件路径里面配置的name</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-question-other" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -893,92 +973,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-release-npm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/02/01/release-npm/">如何发布属于自己的npm组件</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/02/01/release-npm/" class="archive-article-date">
-  	<time datetime="2021-02-01T01:50:24.508Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简单粗暴，上大佬链接"><a href="#简单粗暴，上大佬链接" class="headerlink" title="简单粗暴，上大佬链接"></a>简单粗暴，上大佬链接</h3><p>请跳转: <a target="_blank" rel="noopener" href="http://www.rxshc.com/180.html">http://www.rxshc.com/180.html</a>，教程相当详细</p>
-<h3 id="遇到的问题以及解决方法"><a href="#遇到的问题以及解决方法" class="headerlink" title="遇到的问题以及解决方法"></a>遇到的问题以及解决方法</h3><p>1.自己本地引用组件的时候，控制台一直报红，大致就是没有正确引用组件，此处需要小伙伴自行检查组件name属性，记得开头要大写！！!</p>
-<p>2.在启动项目的时候会遇到相关报错，跟chainWebpack有关的，需要修改为”__dirname + ‘packages’”，代码如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">chainWebpack: config =&gt; &#123;</span><br><span class="line">    config.module</span><br><span class="line">        .rule(<span class="string">&#x27;js&#x27;</span>)</span><br><span class="line">        .include</span><br><span class="line">        .add(__dirname + <span class="string">&#x27;packages&#x27;</span>)</span><br><span class="line">        .end()</span><br><span class="line">        .use(<span class="string">&#x27;babel&#x27;</span>)</span><br><span class="line">        .loader(<span class="string">&#x27;babel-loader&#x27;</span>)</span><br><span class="line">        .tap(options =&gt; &#123;</span><br><span class="line">            <span class="built_in">return</span> options</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>3.一个容易忽略的问题，记得注册npm的时候，一个邮件发送到你的邮箱里面了，记得去点击确认，非常重要，不然发布的时候会一直有loged out错误</p>
-<p>4.每次修改完组件，一定记得变更版本号</p>
-<p>5.发布时需要切换npm源，发布后记得切换回来</p>
-<p>发布时：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry http://registry.npmjs.org</span><br></pre></td></tr></table></figure>
-<p>发布后：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry http://registry.npm.taobao.org/</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
         		</li>
       		
 		</ul>
