@@ -161,6 +161,90 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-html-message" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2021/12/02/html-message/">window.onmessage的场景应用</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2021/12/02/html-message/" class="archive-article-date">
+  	<time datetime="2021-12-02T07:46:05.299Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>根据订单号去打开不同类型的订单详情，详情里面的布局是不同的，且在不同的项目工程里面有对应的静态文件，需要传参过去调用接口去渲染。</p>
+<h3 id="解决思路（iframe的传参使用）"><a href="#解决思路（iframe的传参使用）" class="headerlink" title="解决思路（iframe的传参使用）"></a>解决思路（iframe的传参使用）</h3><ul>
+<li><strong>发送者：</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-dialog</span><br><span class="line">  v-loading=<span class="string">&quot;fullscreenLoading&quot;</span></span><br><span class="line">  :visible.sync=<span class="string">&quot;dialogState&quot;</span></span><br><span class="line">  class=<span class="string">&quot;dialog-info fullScreen&quot;</span></span><br><span class="line">  :append-to-body=<span class="string">&quot;true&quot;</span></span><br><span class="line">  :close-on-click-modal=<span class="string">&quot;false&quot;</span></span><br><span class="line">  fullscreen</span><br><span class="line">  :before-close=<span class="string">&quot;handleCancel&quot;</span></span><br><span class="line">  @opened=<span class="string">&quot;dialogOPen&quot;</span></span><br><span class="line">&gt;</span><br><span class="line">  &lt;div slot=<span class="string">&quot;title&quot;</span> class=<span class="string">&quot;inline between&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;el-dialog__title&quot;</span>&gt;订单详情&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;iframe</span><br><span class="line">    id=<span class="string">&quot;iframeDetail&quot;</span></span><br><span class="line">    :src=<span class="string">&quot;currentSrc&quot;</span></span><br><span class="line">    frameborder=<span class="string">&quot;0&quot;</span></span><br><span class="line">    width=<span class="string">&quot;100%&quot;</span></span><br><span class="line">    height=<span class="string">&quot;98%&quot;</span></span><br><span class="line">    ref=<span class="string">&quot;iframeCommon&quot;</span></span><br><span class="line">    style=<span class="string">&quot;overflow: hidden&quot;</span></span><br><span class="line">    scrolling=<span class="string">&quot;auto&quot;</span></span><br><span class="line">    border=<span class="string">&quot;0&quot;</span></span><br><span class="line">  &gt;&lt;/iframe&gt;</span><br><span class="line">&lt;/el-dialog&gt;</span><br><span class="line">...</span><br><span class="line">model: &#123;</span><br><span class="line">  prop: <span class="string">&quot;dialogState&quot;</span>,</span><br><span class="line">  event: <span class="string">&quot;closeDialog&quot;</span>,</span><br><span class="line">&#125;,</span><br><span class="line">props: &#123;</span><br><span class="line">  dialogState: &#123;</span><br><span class="line">    <span class="built_in">type</span>: Boolean,</span><br><span class="line">    default: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  detailId: &#123;</span><br><span class="line">    <span class="built_in">type</span>: [Number, String],</span><br><span class="line">    default: null,</span><br><span class="line">  &#125;,</span><br><span class="line">  showBtn: &#123;</span><br><span class="line">    <span class="built_in">type</span>: Boolean,</span><br><span class="line">    default: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  otherDiaParams: &#123;</span><br><span class="line">    <span class="built_in">type</span>: Object,</span><br><span class="line">    default: () =&gt; &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br><span class="line">watch: &#123;</span><br><span class="line">  dialogState(newVal, oldVal) &#123;</span><br><span class="line">    <span class="keyword">if</span> (newVal) &#123;</span><br><span class="line">      this.fullscreenLoading = <span class="literal">false</span>;</span><br><span class="line">      this.okSendMessage = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  okSendMessage(val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (val) &#123;</span><br><span class="line">      this.dialogOPen()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">  <span class="function"><span class="title">dialogOPen</span></span>() &#123;</span><br><span class="line">    this.<span class="variable">$nextTick</span>(() =&gt; &#123;</span><br><span class="line">      this.iframeWin.iframeElement = this.<span class="variable">$refs</span>.iframeCommon</span><br><span class="line">      <span class="built_in">let</span> baseHost =</span><br><span class="line">        window.location.protocol.indexOf(<span class="string">&quot;https&quot;</span>) !== -1</span><br><span class="line">          ? <span class="string">&quot;https://rmc.linkkids.cn&quot;</span></span><br><span class="line">          : <span class="string">&quot;http://test.rmc.linkkids.cn&quot;</span>;</span><br><span class="line">      <span class="built_in">let</span> currentName = <span class="string">&quot;&quot;</span>;</span><br><span class="line">      <span class="built_in">let</span> currentType = <span class="string">&quot;&quot;</span>;</span><br><span class="line">      <span class="built_in">let</span> currentId = this.detailId;</span><br><span class="line">      <span class="keyword">if</span> (this.otherDiaParams.flag === <span class="string">&quot;销售&quot;</span>) &#123;</span><br><span class="line">        currentType = 1;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;储值订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;storeValue&quot;</span>;</span><br><span class="line">          this.currentSrc = baseHost + <span class="string">&quot;/lkwalletpay/storeValue&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;服务订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;serviceDetail&quot;</span>;</span><br><span class="line">          this.currentSrc = baseHost + <span class="string">&quot;/lkwalletpay/serviceDetail&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;积分兑换订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;cashPoint&quot;</span>;</span><br><span class="line">          this.currentSrc = <span class="string">&quot;https://imv.linkkids.cn/imv/exchange/orderDetails&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        this.otherDiaParams.flag === <span class="string">&quot;退货&quot;</span> ||</span><br><span class="line">        this.otherDiaParams.flag === <span class="string">&quot;取消&quot;</span></span><br><span class="line">      ) &#123;</span><br><span class="line">        currentType = 2;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;商品订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;goodsReturnOrder&quot;</span>;</span><br><span class="line">          this.currentSrc =</span><br><span class="line">            baseHost + <span class="string">&quot;/lkorder/order/index/refundDetailHtml&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;储值订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;storeValueBack&quot;</span>;</span><br><span class="line">          this.currentSrc = baseHost + <span class="string">&quot;/lkwalletpay/storeValueBack&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (this.otherDiaParams.type === <span class="string">&quot;服务订单&quot;</span>) &#123;</span><br><span class="line">          currentName = <span class="string">&quot;backorderDetail&quot;</span>;</span><br><span class="line">          this.currentSrc = baseHost + <span class="string">&quot;/lkwalletpay/backorderDetail&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      window.onmessage = (e)=&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(e.data===<span class="string">&#x27;loaded&#x27;</span>)&#123;</span><br><span class="line">          <span class="keyword">if</span> (this.iframeWin.iframeElement.contentWindow) &#123;</span><br><span class="line">            this.iframeWin.iframeElement.contentWindow.postMessage(</span><br><span class="line">              &#123;</span><br><span class="line">                name: currentName,</span><br><span class="line">                params: &#123;</span><br><span class="line">                  code: currentId,</span><br><span class="line">                  <span class="built_in">type</span>: currentType,</span><br><span class="line">                &#125;,</span><br><span class="line">              &#125;,</span><br><span class="line">              this.currentSrc</span><br><span class="line">            );</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>接收者：</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mounted</span></span>()&#123;</span><br><span class="line">  window.parent.postMessage(<span class="string">&quot;loaded&quot;</span>, <span class="string">&quot;*&quot;</span>)</span><br><span class="line">  window.onmessage = (event)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.data.name===<span class="string">&#x27;goodsReturnOrder&#x27;</span>)&#123;</span><br><span class="line">      this.pageLoading = <span class="literal">true</span></span><br><span class="line">      this.refundId = event.data.params.code</span><br><span class="line">      this.getRefundDetailInfo();</span><br><span class="line">      this.getOperatingRecord();</span><br><span class="line">      this.queryGoodsBatch();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-vue-router" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -927,90 +1011,6 @@
 
 
   
-    <article id="post-2021-03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/03/05/2021-03/">2021-03知识点记录</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/03/05/2021-03/" class="archive-article-date">
-  	<time datetime="2021-03-05T08:23:21.740Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-用vue写自定义指令的问题"><a href="#1-用vue写自定义指令的问题" class="headerlink" title="1.用vue写自定义指令的问题"></a>1.用vue写自定义指令的问题</h3><p>在本地开发环境使用Vue.directive写自定义指令，然后再main.js里面引入，看实际效果是可以的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.directive()</span><br></pre></td></tr></table></figure>
-<p>问题出在发布到测试环境上就报红，错误如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot <span class="built_in">read</span> property <span class="string">&#x27;install&#x27;</span> of undefined</span><br></pre></td></tr></table></figure>
-<p>主要原因是写自定义指令的时候，忽略了install方法，解决办法如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> default &#123;</span><br><span class="line">  install: Vue =&gt; &#123;</span><br><span class="line">    Vue.directive()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-iframe跨页面通信问题"><a href="#2-iframe跨页面通信问题" class="headerlink" title="2.iframe跨页面通信问题"></a>2.iframe跨页面通信问题</h3><p>项目里面遇到一个这样的问题：<br>1.首页是一个表格，表格里面汇总了很多类型的数据，每个类型的的数据详情页面是不一样的<br>2.采用iframe方式获取传参，并触发接口请求返回数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> &lt;iframe</span><br><span class="line">  id=<span class="string">&quot;iframeDetail&quot;</span></span><br><span class="line">  :src=<span class="string">&quot;currentSrc&quot;</span></span><br><span class="line">  frameborder=<span class="string">&quot;0&quot;</span></span><br><span class="line">  width=<span class="string">&quot;100%&quot;</span></span><br><span class="line">  height=<span class="string">&quot;98%&quot;</span></span><br><span class="line">  ref=<span class="string">&quot;iframeCommon&quot;</span></span><br><span class="line">  style=<span class="string">&quot;overflow: hidden&quot;</span></span><br><span class="line">  scrolling=<span class="string">&quot;auto&quot;</span></span><br><span class="line">  border=<span class="string">&quot;0&quot;</span></span><br><span class="line">&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
-<p>关键代码：<br>当详情弹框打开的时候，currentSrc可以根据表格传递的信息拿到值，同时执行如下代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">this.iframeWin.iframeElement = this.<span class="variable">$refs</span>.iframeCommon</span><br><span class="line">window.onmessage = (e)=&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(e.data===<span class="string">&#x27;loaded&#x27;</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (this.iframeWin.iframeElement.contentWindow) &#123;</span><br><span class="line">      this.iframeWin.iframeElement.contentWindow.postMessage(</span><br><span class="line">        &#123;</span><br><span class="line">          name: currentName, //需要传递给iframe的信息</span><br><span class="line">          params: &#123;</span><br><span class="line">            code: currentId,</span><br><span class="line">            <span class="built_in">type</span>: currentType,</span><br><span class="line">          &#125;, //需要传递给iframe的信息</span><br><span class="line">        &#125;,</span><br><span class="line">        this.currentSrc</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>另一端vue页面：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mounted</span></span>() &#123;</span><br><span class="line">  window.parent.postMessage(<span class="string">&quot;loaded&quot;</span> , <span class="string">&quot;*&quot;</span>);</span><br><span class="line">  window.onmessage = (event) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (event.data.name === <span class="string">&quot;xxxx&quot;</span>) &#123;</span><br><span class="line">      this.loading = <span class="literal">true</span>;</span><br><span class="line">      queryDetailByDealCode(&#123;</span><br><span class="line">        dealCode: event.data.params.code,</span><br><span class="line">        opType: event.data.params.type</span><br><span class="line">      &#125;)</span><br><span class="line">        .<span class="keyword">then</span>(res =&gt; &#123;</span><br><span class="line">          this.loading = <span class="literal">false</span></span><br><span class="line">          <span class="keyword">if</span> (res.code == 0) &#123;</span><br><span class="line">            ....</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ....</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(error =&gt; &#123;</span><br><span class="line">          this.loading = <span class="literal">false</span></span><br><span class="line">          ....</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-数组扁平化去重"><a href="#3-数组扁平化去重" class="headerlink" title="3.数组扁平化去重"></a>3.数组扁平化去重</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>],[<span class="number">9</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">4</span>],[<span class="number">11</span>,<span class="number">10</span>,<span class="number">14</span>,[<span class="number">12</span>,<span class="number">18</span>]]]</span><br><span class="line"><span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(a.flat(<span class="literal">Infinity</span>))).sort(<span class="function">(<span class="params">a,b</span>)=&gt;</span>&#123;<span class="keyword">return</span> a-b&#125;)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/newBlog/page/2/">2</a><a class="extend next" rel="next" href="/newBlog/page/2/">Next &amp;raquo;</a>
@@ -1201,7 +1201,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="https://laod.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>老D博客</a>
+              <a href="https://xuliangzhan_admin.gitee.io/vxe-table/#/table/api" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>vxe-table文档</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://github.com/daoke0818/pro_bigScreenCharts" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>大屏Echarts适配</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.cnblogs.com/liujiazhu/p/10251284.html" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>vue组件发布npm</a>
             </li>
           
         </ul>
