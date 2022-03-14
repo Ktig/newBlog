@@ -16,7 +16,7 @@
 <meta property="og:description" content="问题打开页面之后，底部汇总行展示错位问题，但是只要稍微改变dom，汇总行就展示ok。 解决方法12345678&lt;el-table  ref&#x3D;&quot;table&quot;  show-summary  :summary-method&#x3D;&quot;AAA&quot;  ...&gt;  ...&lt;&#x2F;el-table&gt; 1234567891011methods:&amp;#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-06T07:39:25.169Z">
-<meta property="article:modified_time" content="2021-07-06T07:49:35.785Z">
+<meta property="article:modified_time" content="2022-03-14T06:33:46.078Z">
 <meta property="article:author" content="kuan&#96;s">
 <meta property="article:tag" content="Element">
 <meta name="twitter:card" content="summary">
@@ -184,8 +184,19 @@
         <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行展示错位问题，但是只要稍微改变dom，汇总行就展示ok。</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;AAA&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">    AAA(param)&#123;</span><br><span class="line">        this.<span class="variable">$nextTick</span>(()=&gt;&#123;</span><br><span class="line">            this.<span class="variable">$refs</span>.table.doLayout(); //关键代码</span><br><span class="line">            <span class="built_in">return</span> this.getSummary(param)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    getSummary(&#123;columns,data&#125;)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行未展示问题，但是只要稍微改变dom，汇总行就展示。</p>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;getSummary&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">updated()&#123;
+    this.$refs.table.doLayout();
+&#125;,
+methods:&#123;
+    getSummary(&#123;columns,data&#125;)&#123;
+        ...
+    &#125;
+&#125;
 
 
+</code></pre>
 
       
 
@@ -376,7 +387,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 kuan`s
+    		&copy; 2022 kuan`s
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -468,15 +479,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Element</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTML</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
