@@ -161,6 +161,102 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-el-upload" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2022/04/01/el-upload/">el-upload本地上传文件</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2022/04/01/el-upload/" class="archive-article-date">
+  	<time datetime="2022-04-01T02:01:16.657Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。</p>
+<h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  action=<span class="string">&quot;xxxxxxxxxxxxxx&quot;</span></span><br><span class="line">  @on-success=<span class="string">&quot;uploadSuccess&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line">...</span><br><span class="line">uploadSuccess(data,file)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这么做是错误的，而且要走服务器，之前网上随便找的一个服务器URL，前几次上传还行，后面直接服务503，文件的内容也获取不到</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  action</span><br><span class="line">  :auto-upload=<span class="string">&quot;false&quot;</span></span><br><span class="line">  :on-change=<span class="string">&quot;uploadSuccess&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line">...</span><br><span class="line">uploadSuccess(file)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这么做是可行的，不需要走服务器，内容直接返回</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Element</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-vue-vuex" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1054,115 +1150,6 @@ methods:&#123;
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Cookie</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-	<div id="gitalk-container" style="margin: 0 30px;"></div>
-	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="https://priesttomb.github.io/js/md5.min.js"></script>
-<script type="text/javascript">
-    new Gitalk({
-        clientID: 'a5fbcccfa0692cdffde4',
-        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
-        repo: 'newBlog-comments',
-        owner: 'Ktig',
-        admin: 'Ktig',
-        id: md5(location.pathname),
-        distractionFreeMode: true
-    }).render('gitalk-container')
-</script>
-
-
-  
-    <article id="post-print" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/03/31/print/">前端打印相关</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/03/31/print/" class="archive-article-date">
-  	<time datetime="2021-03-31T07:01:55.867Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>需要打印相关页面区域，涉及到打印商品条码</p>
-<h3 id="依赖及使用"><a href="#依赖及使用" class="headerlink" title="依赖及使用"></a>依赖及使用</h3><p>1.生成条码，npm依赖及使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save @xkeshi/vue-barcode</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;VueBarcode :value=<span class="string">&quot;item.barCode&quot;</span> :options=<span class="string">&quot;barcode_options&quot;</span> /&gt;</span><br><span class="line">...</span><br><span class="line">import VueBarcode from <span class="string">&#x27;@xkeshi/vue-barcode&#x27;</span>;</span><br><span class="line">...</span><br><span class="line">barcode_options:&#123;</span><br><span class="line">    width:<span class="string">&#x27;1px&#x27;</span>,</span><br><span class="line">    height:<span class="string">&#x27;30px&#x27;</span>,</span><br><span class="line">    fontSize:<span class="string">&#x27;16px&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.打印区域，npm依赖及使用</p>
-<p>官方文档：<a href="%22https://printjs.crabbly.com/%22">print-js</a><br>简书详解：<a href="%22https://www.jianshu.com/p/bc079fbb20c7%22">print-js</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install print-js --save</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import css from <span class="string">&#x27;./printCss&#x27;</span></span><br><span class="line">import printJS from <span class="string">&#x27;print-js&#x27;</span></span><br><span class="line">...</span><br><span class="line">const style = css; //直接写样式</span><br><span class="line">printJS(&#123;</span><br><span class="line">    header:<span class="string">&quot;&quot;</span>,//标题</span><br><span class="line">    <span class="built_in">type</span>:<span class="string">&quot;&quot;</span>,//类型</span><br><span class="line">    printable:<span class="string">&quot;&quot;</span>,//区域id,</span><br><span class="line">    scanStyles: <span class="literal">false</span>,</span><br><span class="line">    style</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>注意点：vue项目里面的样式使用的scss,调取本地打印预览的时候样式都乱掉了，需要直接引入样式</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> css =`</span><br><span class="line">@media <span class="built_in">print</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">`</span><br><span class="line"><span class="built_in">export</span> default css</span><br></pre></td></tr></table></figure>
-<p>同时要注意@media里面的样式不能再使用scss或者less写法,要使用css3的类名写法</p>
-<p>3.项目实例（type=’JSON’）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">printJS(&#123;</span><br><span class="line">    documentTitle:<span class="string">&#x27;.&#x27;</span>,</span><br><span class="line">    printable: listData,</span><br><span class="line">    properties: arr,</span><br><span class="line">    repeatTableHeader:<span class="literal">false</span>, //表头仅展示在第一页</span><br><span class="line">    <span class="built_in">type</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">    header: <span class="string">&#x27;&lt;h3 class=&quot;custom-h3&quot;&gt;【收银员收银统计报表】&lt;/h3&gt;&#x27;</span>,</span><br><span class="line">    style: <span class="string">&#x27;.custom-h3 &#123; text-align:center;font-size:14px &#125;&#x27;</span>,</span><br><span class="line">    gridHeaderStyle:<span class="string">&#x27;border: 1px solid lightgray;font-weight：bold;font-size:12px&#x27;</span>,</span><br><span class="line">    gridStyle:<span class="string">&#x27;border: 1px solid lightgray; margin-bottom: -1px;font-size:10px;text-align:center&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>项目里面用过vxe-table插件自带的print-config,在打印的时候，字体大小和行高都无法控制，所以还是转到了print-js。。。。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
         		</li>
       		
 		</ul>
