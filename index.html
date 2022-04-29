@@ -240,8 +240,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -354,8 +354,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -391,7 +391,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>根据订单号去打开不同类型的详情，详情里面的布局是不同的，且在不同的项目工程里面有对应的静态文件，需要传参过去调用接口去渲染。</p>
+        <h3 id="场景1"><a href="#场景1" class="headerlink" title="场景1"></a>场景1</h3><p>根据订单号去打开不同类型的详情，详情里面的布局是不同的，且在不同的项目工程里面有对应的静态文件，需要传参过去调用接口去渲染。</p>
 <h3 id="解决思路（iframe的传参使用）"><a href="#解决思路（iframe的传参使用）" class="headerlink" title="解决思路（iframe的传参使用）"></a>解决思路（iframe的传参使用）</h3><ul>
 <li><strong>发送者：</strong></li>
 </ul>
@@ -400,6 +400,16 @@
 <li><strong>接收者：</strong></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mounted</span></span>()&#123;</span><br><span class="line">  window.parent.postMessage(<span class="string">&quot;loaded&quot;</span>, <span class="string">&quot;*&quot;</span>)</span><br><span class="line">  window.onmessage = (event)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.data.name===<span class="string">&#x27;goodsReturnOrder&#x27;</span>)&#123;</span><br><span class="line">      this.pageLoading = <span class="literal">true</span></span><br><span class="line">      this.refundId = event.data.params.code</span><br><span class="line">      this.init();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="场景2"><a href="#场景2" class="headerlink" title="场景2"></a>场景2</h3><p>点击 aaa.bbb.com 中的一个按钮打开 ccc.bbb.com 页面，跨域传值，其中sessionStorage存储传值不可用。</p>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><ul>
+<li><strong>发送者：</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.popupwin  = window.open(<span class="string">&quot;http://ccc.bbb.com&quot;</span>); // 打开子窗口</span><br><span class="line">// 监听到子页面的message消息后，向子页面发送参数（子窗口打开后，会向当前窗口发送message消息，当前窗口监听到子窗口发送的消息后，向子窗口发消息）</span><br><span class="line">window.addEventListener(<span class="string">&#x27;message&#x27;</span>, (e)=&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(e.data.type===<span class="string">&#x27;start&#x27;</span>)&#123;</span><br><span class="line">    window.popupwin.postMessage(&#123;data:<span class="string">&#x27;222223333&#x27;</span>&#125;, <span class="string">&#x27;http://ccc.bbb.com&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>接收者：</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">data</span></span>()&#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    receiveNum:0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">mounted</span></span>()&#123;</span><br><span class="line">  window.opener.postMessage(&#123;<span class="built_in">type</span>:<span class="string">&#x27;start&#x27;</span>&#125;, <span class="string">&#x27;*&#x27;</span>);// 向父页面发消息，触发父页面的监听事件，父页面就会给子页面发参数</span><br><span class="line">  // 监听父页面发送的message消息，获取参数</span><br><span class="line">  window.addEventListener(<span class="string">&#x27;message&#x27;</span>, (e)=&gt; &#123;  // 监听 message 事件</span><br><span class="line">    this.receiveNum++;</span><br><span class="line">    //只做一次触发</span><br><span class="line">    <span class="keyword">if</span>(this.receiveNum===1)&#123;</span><br><span class="line">      console.log(<span class="string">&quot;postMessage data:&quot;</span> + e.data.data);</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 
 
@@ -457,8 +467,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -556,8 +566,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -687,8 +697,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -791,8 +801,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -891,8 +901,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -987,8 +997,8 @@
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -1094,8 +1104,8 @@ methods:&#123;
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -1190,8 +1200,8 @@ methods:&#123;
 
 	<div id="gitalk-container" style="margin: 0 30px;"></div>
 	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 <script src="https://priesttomb.github.io/js/md5.min.js"></script>
 <script type="text/javascript">
     new Gitalk({
@@ -1305,15 +1315,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1321,7 +1327,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1330,10 +1344,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">npm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
               </li>
              
               <li class="article-tag-list-item">
