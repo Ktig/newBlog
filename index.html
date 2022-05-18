@@ -167,6 +167,107 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-system-manage" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2022/05/18/system-manage/">PC端管理后台，使用vue框架部分功能总结</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2022/05/18/system-manage/" class="archive-article-date">
+  	<time datetime="2022-05-18T09:30:13.635Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>左侧菜单栏打开新页面，要将标签显示在顶部排列，效果如下图<br><img src="https://ktig.github.io/newBlog/2021/07/12/s-video/sys_20220518173552.png" alt="sys_20220518173552"></p>
+<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>切换页面，如果保证其他页面的状态不会变更？关闭菜单，再打开菜单，如果保证当前页面的状态是新的？</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>本方法不使用store，也不使用iframe嵌套。因为页面刷新时，会导致store数据丢失问题。因此突发奇想，使用localStorage存储打开的菜单和当前菜单来完成。</p>
+<p>App.vue 关键代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;keep-alive :exclude=<span class="string">&#x27;exclude&#x27;</span> :include=<span class="string">&quot;include&quot;</span>&gt;</span><br><span class="line">  &lt;router-view :key=<span class="string">&quot;<span class="variable">$route</span>.path&quot;</span>/&gt;</span><br><span class="line">&lt;/keep-alive&gt;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">watch:&#123;</span><br><span class="line">  <span class="string">&#x27;$route&#x27;</span>(to, from) &#123;</span><br><span class="line">	  <span class="built_in">let</span> arr = []</span><br><span class="line">	  <span class="built_in">let</span> openUrls = localStorage.getItem(<span class="string">&#x27;openUrls&#x27;</span>)?JSON.parse(localStorage.getItem(<span class="string">&#x27;openUrls&#x27;</span>)):[]</span><br><span class="line">	  <span class="built_in">let</span> flag = <span class="literal">true</span></span><br><span class="line">	  openUrls.map(item=&gt;&#123;</span><br><span class="line">		  <span class="keyword">if</span>(item.path===to.path)&#123;</span><br><span class="line">			  flag = <span class="literal">false</span></span><br><span class="line">		  &#125;</span><br><span class="line">	  &#125;)</span><br><span class="line">	  //判断是不是新菜单</span><br><span class="line">	  <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">		  //排除不会显示在顶部的菜单</span><br><span class="line">		  <span class="keyword">if</span>(to.path!==<span class="string">&#x27;/A&#x27;</span>&amp;&amp;to.path!==<span class="string">&#x27;/B&#x27;</span>&amp;&amp;to.path!==<span class="string">&#x27;/C&#x27;</span>)&#123;</span><br><span class="line">			  openUrls.push(&#123;</span><br><span class="line">				  name:to.name,</span><br><span class="line">				  path:to.path</span><br><span class="line">			  &#125;)</span><br><span class="line">		  &#125;</span><br><span class="line">	  &#125;</span><br><span class="line">	  //解决问题2（keep-alive动态变更include值）</span><br><span class="line">	  openUrls.map(item=&gt;&#123;</span><br><span class="line">		  <span class="keyword">if</span>(item.path&amp;&amp;item.path.substr(1,item.path.length))&#123;</span><br><span class="line">			  arr.push(item.path.substr(1,item.path.length))</span><br><span class="line">		  &#125;</span><br><span class="line">	  &#125;)</span><br><span class="line">	  this.include = arr</span><br><span class="line">	  //保存已经打开的菜单</span><br><span class="line">	  localStorage.setItem(<span class="string">&#x27;openUrls&#x27;</span>,JSON.stringify(openUrls))</span><br><span class="line">	  //确保当前菜单不包含排除的菜单</span><br><span class="line">	  <span class="keyword">if</span>(to.path!==<span class="string">&#x27;/A&#x27;</span>&amp;&amp;to.path!==<span class="string">&#x27;/B&#x27;</span>&amp;&amp;to.path!==<span class="string">&#x27;/C&#x27;</span>)&#123;</span><br><span class="line">		  localStorage.setItem(<span class="string">&#x27;currentOpen&#x27;</span>,JSON.stringify(&#123;name:to.name,path:to.path&#125;))</span><br><span class="line">	  &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Header.vue 关键代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&lt;span v-for=<span class="string">&quot;(item,index) in links&quot;</span> :key=<span class="string">&quot;index&quot;</span> :class=<span class="string">&quot;activeUrls===item.path?&#x27;active_link&#x27;:&#x27;&#x27;&quot;</span> @click=<span class="string">&quot;handleChangeRoute(item)&quot;</span>&gt;</span><br><span class="line">&#123;&#123;item.name&#125;&#125;</span><br><span class="line">&lt;i class=<span class="string">&quot;el-icon-close&quot;</span> v-if=<span class="string">&quot;item.path!==&#x27;/&#x27;&quot;</span> @click.stop=<span class="string">&quot;handleCloseRoute(index)&quot;</span>&gt;&lt;/i&gt;</span><br><span class="line">&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">...</span><br><span class="line">watch: &#123;</span><br><span class="line">	// 如果路由有变化，会再次执行该方法</span><br><span class="line">	<span class="string">&#x27;$route&#x27;</span>()&#123;</span><br><span class="line">		this.links = localStorage.getItem(<span class="string">&#x27;openUrls&#x27;</span>)?JSON.parse(localStorage.getItem(<span class="string">&#x27;openUrls&#x27;</span>)):[]</span><br><span class="line">		this.activeUrls = localStorage.getItem(<span class="string">&#x27;currentOpen&#x27;</span>)?JSON.parse(localStorage.getItem(<span class="string">&#x27;currentOpen&#x27;</span>)).path:<span class="string">&#x27;&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">	handleChangeRoute(obj)&#123;</span><br><span class="line">		this.<span class="variable">$router</span>.push(obj.path)</span><br><span class="line">	&#125;,</span><br><span class="line">	handleCloseRoute(index)&#123;</span><br><span class="line">		this.links.splice(index,1)</span><br><span class="line">		<span class="keyword">if</span>(this.links[index]&amp;&amp;this.links[index].path)&#123;</span><br><span class="line">			this.<span class="variable">$router</span>.push(this.links[index].path)</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			this.<span class="variable">$router</span>.push(this.links[index-1].path)</span><br><span class="line">		&#125;</span><br><span class="line">		localStorage.setItem(<span class="string">&#x27;openUrls&#x27;</span>,JSON.stringify(this.links))</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-el-upload" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1119,102 +1220,6 @@
 
 
   
-    <article id="post-cookie" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/05/12/cookie/">如何更改Cookie的domain属性</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/05/12/cookie/" class="archive-article-date">
-  	<time datetime="2021-05-12T01:53:03.551Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>通过url传参方式，将值存入cookie，调用接口需要用到</p>
-<h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><p>通过document.cookie = “name=aaa;value=bbb;domain=xxx”，这样的方式去实现，打开控制台，发现cookie的domain并没有改变，而是默认的url的domain值</p>
-<h3 id="正解"><a href="#正解" class="headerlink" title="正解"></a>正解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save js-cookie</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Cookies from js-cookie</span><br><span class="line">Cookies.set(key, value, &#123;</span><br><span class="line">    domain: domain</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>domain的设置要合规化，在解决cookie通用问题上，保证二级域名及以上相同。例如：“xxx.aaa.com”</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Cookie</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-	<div id="gitalk-container" style="margin: 0 30px;"></div>
-	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
-<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
-<script src="https://priesttomb.github.io/js/md5.min.js"></script>
-<script type="text/javascript">
-    new Gitalk({
-        clientID: 'a5fbcccfa0692cdffde4',
-        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
-        repo: 'newBlog-comments',
-        owner: 'Ktig',
-        admin: 'Ktig',
-        id: md5(location.pathname),
-        distractionFreeMode: true
-    }).render('gitalk-container')
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/newBlog/page/2/">2</a><a class="extend next" rel="next" href="/newBlog/page/2/">Next &amp;raquo;</a>
@@ -1313,7 +1318,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
+                <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1325,19 +1330,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTML</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Javascript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1349,11 +1342,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">React</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
               </li>
             
             <div class="clearfix"></div>
