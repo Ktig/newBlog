@@ -167,6 +167,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-npm-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2022/07/15/npm-update/">关于淘宝npm镜像变更域名带来的问题</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2022/07/15/npm-update/" class="archive-article-date">
+  	<time datetime="2022-07-15T09:03:52.441Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>自己本地新项目下载依赖的时候发现某个依赖下载报错，关键字“retry GET <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/xxxxxx">https://registry.npmmirror.com/xxxxxx</a> after 100ms, ….Response timeout for 60000ms”</p>
+<h3 id="后续流程"><a href="#后续流程" class="headerlink" title="后续流程"></a>后续流程</h3><p>1.通过百度发现简书文章 - “npm查看本地镜像源，修改为最新淘宝镜像源”</p>
+<p>2.进入文章内链接 - “淘宝 NPM 镜像站切换新域名啦”（知乎）</p>
+<p>3.得知 老 <a target="_blank" rel="noopener" href="http://npm.taobao.org/">http://npm.taobao.org</a> 和 <a target="_blank" rel="noopener" href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a> 域名将于 2022 年 05 月 31 日零时起停止服务，后续以 <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com</a> 为准</p>
+<p>4.然后自己通过指令 npm config set registry <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com</a> 以及 npm config get registry 发现切换成功</p>
+<p>5.重新cnpm install 依旧报错，继续搜索发现需要执行 npm install -g cnpm –registry=<a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com</a></p>
+<p>6.执行命令ok，再次重新cnpm install，直接红色error:randomUUID is not a function</p>
+<p>7.继续探索，大佬们说这个是因为node版本较低，需要node 14.19.xx ,然后发现果然，自己的node 版本才14.15.xx</p>
+<p>8.通过快捷传送门：<a href="%22https://nodejs.org/dist/v14.19.3/%22">nodejs(v14.19.3)</a>，实现快速下载，记得下载msi版本，直接next一路到底就行。</p>
+<p>9.安装成功之后，node -v检查下版本是否正确，然后再次cnpm install ，完美解决</p>
+<p>10.赶紧记录一波，nice！！！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-system-manage" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1121,105 +1223,6 @@
 
 
   
-    <article id="post-el-table" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/07/06/el-table/">el-table/vxe-table底部summary渲染问题</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/07/06/el-table/" class="archive-article-date">
-  	<time datetime="2021-07-06T07:39:25.169Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行展示错位问题，但是只要稍微改变dom，汇总行就展示ok。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;AAA&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">    AAA(param)&#123;</span><br><span class="line">        this.<span class="variable">$nextTick</span>(()=&gt;&#123;</span><br><span class="line">            this.<span class="variable">$refs</span>.table.doLayout(); //关键代码</span><br><span class="line">            <span class="built_in">return</span> this.getSummary(param)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    getSummary(&#123;columns,data&#125;)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行未展示问题，但是只要稍微改变dom，汇总行就展示。</p>
-<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;getSummary&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">updated</span></span>()&#123;</span><br><span class="line">    this.<span class="variable">$refs</span>.table.doLayout();</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">    getSummary(&#123;columns,data&#125;)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h3><p>使用vxe-table组件，分两个接口调用，一个查sumInfo，一个查tableData，但是sumInfo总是渲染上次查询的结果。</p>
-<h3 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h3><p>1.如果使用的同步调用，会涉及的一个问题就是loading问题，这么做的话可以启用watch，监听num的值，等于2，将loading变为false。<br>2.可以使用async，await，这样就是导致问题的原因。方法就是先调用sumInfo接口，再调用tableData接口，这样渲染问题也可以解决，记得最后面接口负责将loading改为false。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Element</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-	<div id="gitalk-container" style="margin: 0 30px;"></div>
-	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
-<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
-<script src="https://priesttomb.github.io/js/md5.min.js"></script>
-<script type="text/javascript">
-    new Gitalk({
-        clientID: 'a5fbcccfa0692cdffde4',
-        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
-        repo: 'newBlog-comments',
-        owner: 'Ktig',
-        admin: 'Ktig',
-        id: md5(location.pathname),
-        distractionFreeMode: true
-    }).render('gitalk-container')
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/newBlog/page/2/">2</a><a class="extend next" rel="next" href="/newBlog/page/2/">Next &amp;raquo;</a>
@@ -1318,6 +1321,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
               </li>
              
@@ -1334,11 +1341,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,10 +1362,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">video</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
               </li>
             
             <div class="clearfix"></div>

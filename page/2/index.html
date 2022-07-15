@@ -167,6 +167,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-el-table" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2021/07/06/el-table/">el-table/vxe-table底部summary渲染问题</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2021/07/06/el-table/" class="archive-article-date">
+  	<time datetime="2021-07-06T07:39:25.169Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行展示错位问题，但是只要稍微改变dom，汇总行就展示ok。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;AAA&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">    AAA(param)&#123;</span><br><span class="line">        this.<span class="variable">$nextTick</span>(()=&gt;&#123;</span><br><span class="line">            this.<span class="variable">$refs</span>.table.doLayout(); //关键代码</span><br><span class="line">            <span class="built_in">return</span> this.getSummary(param)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    getSummary(&#123;columns,data&#125;)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p>打开页面之后，底部汇总行未展示问题，但是只要稍微改变dom，汇总行就展示。</p>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table</span><br><span class="line">  ref=<span class="string">&quot;table&quot;</span></span><br><span class="line">  show-summary</span><br><span class="line">  :summary-method=<span class="string">&quot;getSummary&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/el-table&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">updated</span></span>()&#123;</span><br><span class="line">    this.<span class="variable">$refs</span>.table.doLayout();</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">    getSummary(&#123;columns,data&#125;)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h3><p>使用vxe-table组件，分两个接口调用，一个查sumInfo，一个查tableData，但是sumInfo总是渲染上次查询的结果。</p>
+<h3 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h3><p>1.如果使用的同步调用，会涉及的一个问题就是loading问题，这么做的话可以启用watch，监听num的值，等于2，将loading变为false。<br>2.可以使用async，await，这样就是导致问题的原因。方法就是先调用sumInfo接口，再调用tableData接口，这样渲染问题也可以解决，记得最后面接口负责将loading改为false。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Element</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-cookie" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -310,11 +409,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
         		</li>
       		
 		</ul>
@@ -888,6 +987,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
               </li>
              
@@ -904,11 +1007,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+                <a href="javascript:void(0)" class="js-tag color4">Vue</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -925,10 +1028,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">video</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
               </li>
             
             <div class="clearfix"></div>
