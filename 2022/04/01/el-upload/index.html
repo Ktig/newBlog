@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Ktig.github.io/newBlog">
-  <title>el-upload本地上传文件 | Kuan`s Hexo Blog</title>
+  <title>el-upload上传问题 | Kuan`s Hexo Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。 误区12345678910&lt;el-upload  action&#x3D;&quot;xxxxxxxxxxxxxx&quot;  @on-success&#x3D;&quot;uploadSuccess&quot;  ...&gt;&lt;&#x2F;el-upload&gt;...uploadSuccess(data,file)&amp;#123;">
+  <meta name="description" content="问题1需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。 误区12345678910&lt;el-upload  action&#x3D;&quot;xxxxxxxxxxxxxx&quot;  @on-success&#x3D;&quot;uploadSuccess&quot;  ...&gt;&lt;&#x2F;el-upload&gt;...uploadSuccess(data,file)&amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="el-upload本地上传文件">
+<meta property="og:title" content="el-upload上传问题">
 <meta property="og:url" content="https://ktig.github.io/newBlog/2022/04/01/el-upload/index.html">
 <meta property="og:site_name" content="Kuan&#96;s Hexo Blog">
-<meta property="og:description" content="问题需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。 误区12345678910&lt;el-upload  action&#x3D;&quot;xxxxxxxxxxxxxx&quot;  @on-success&#x3D;&quot;uploadSuccess&quot;  ...&gt;&lt;&#x2F;el-upload&gt;...uploadSuccess(data,file)&amp;#123;">
+<meta property="og:description" content="问题1需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。 误区12345678910&lt;el-upload  action&#x3D;&quot;xxxxxxxxxxxxxx&quot;  @on-success&#x3D;&quot;uploadSuccess&quot;  ...&gt;&lt;&#x2F;el-upload&gt;...uploadSuccess(data,file)&amp;#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-01T02:01:16.657Z">
-<meta property="article:modified_time" content="2022-04-01T02:15:04.742Z">
+<meta property="article:modified_time" content="2022-09-30T06:46:44.369Z">
 <meta property="article:author" content="kuan&#96;s">
 <meta property="article:tag" content="Element">
 <meta name="twitter:card" content="summary">
@@ -174,7 +174,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      el-upload本地上传文件
+      el-upload上传问题
     </h1>
   
 
@@ -187,11 +187,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。</p>
+        <h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>需要传一个文件，但是这个文件不走服务器，相当于本地上传直接获取文件内容。</p>
 <h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  action=<span class="string">&quot;xxxxxxxxxxxxxx&quot;</span></span><br><span class="line">  @on-success=<span class="string">&quot;uploadSuccess&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line">...</span><br><span class="line">uploadSuccess(data,file)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这么做是错误的，而且要走服务器，之前网上随便找的一个服务器URL，前几次上传还行，后面直接服务503，文件的内容也获取不到</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  action</span><br><span class="line">  :auto-upload=<span class="string">&quot;false&quot;</span></span><br><span class="line">  :on-change=<span class="string">&quot;uploadSuccess&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line">...</span><br><span class="line">uploadSuccess(file)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这么做是可行的，不需要走服务器，内容直接返回</p>
+<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>before-upload触发了before-remove事件。</p>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  action</span><br><span class="line">  :before-remove=<span class="string">&quot;handleBeforeRemoveFile&quot;</span></span><br><span class="line">  :before-upload=<span class="string">&quot;beforeAvatarUploadFile&quot;</span></span><br><span class="line">  ...</span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line">...</span><br><span class="line">handleBeforeRemoveFile(file, fileList)&#123;</span><br><span class="line">  <span class="keyword">if</span>(file&amp;&amp;file.status===<span class="string">&#x27;success&#x27;</span>)&#123; //这个是关键</span><br><span class="line">    <span class="built_in">return</span> this.<span class="variable">$confirm</span>(<span class="string">&#x27;是否确认删除该文件？&#x27;</span>,<span class="string">&#x27;提示&#x27;</span>,&#123;</span><br><span class="line">      <span class="built_in">type</span>:<span class="string">&quot;warning&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>搭配el-image组件进行图片预览，需要获取该图片的路径，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-image </span><br><span class="line">  v-show=<span class="string">&quot;false&quot;</span></span><br><span class="line">  ref=<span class="string">&quot;dialogImageRef&quot;</span></span><br><span class="line">  :src=<span class="string">&quot;dialogImageUrl&quot;</span> </span><br><span class="line">  :preview-src-list=<span class="string">&quot;dialogImageUrl.split(&#x27;,&#x27;)&quot;</span></span><br><span class="line">&gt;</span><br><span class="line">&lt;/el-image&gt;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//预览图片</span><br><span class="line">handleViewImg(val,index)&#123;</span><br><span class="line">  this.dialogImageUrl = val.filePath;</span><br><span class="line">  this.<span class="variable">$refs</span>.dialogImageRef.showViewer = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
 
       
 
@@ -466,11 +474,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
+                <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cookie</a>
+                <a href="javascript:void(0)" class="js-tag color4">小知识</a>
               </li>
              
               <li class="article-tag-list-item">
