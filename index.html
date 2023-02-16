@@ -167,6 +167,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jszip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2023/02/16/jszip/">jszip的简单使用</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2023/02/16/jszip/" class="archive-article-date">
+  	<time datetime="2023-02-16T03:08:33.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>需要获取数据行包含的图片和文件信息，并压缩成zip文件下载</p>
+<h3 id="依赖及使用"><a href="#依赖及使用" class="headerlink" title="依赖及使用"></a>依赖及使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save jszip</span><br><span class="line">$ npm install --save file-saver</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// a.api</span><br><span class="line">import axios from <span class="string">&quot;axios&quot;</span></span><br><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> getFile(url) &#123;</span><br><span class="line">  <span class="built_in">return</span> axios.request(&#123;</span><br><span class="line">    url: url,</span><br><span class="line">    method: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">    responseType: <span class="string">&#x27;blob&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// a.vue</span><br><span class="line">import JSZip from <span class="string">&#x27;js-cookie&#x27;</span></span><br><span class="line">import FileSaver from <span class="string">&#x27;file-saver&#x27;</span></span><br><span class="line">import &#123; getFile &#125; from <span class="string">&#x27;./api&#x27;</span></span><br><span class="line">......</span><br><span class="line">methods: &#123;</span><br><span class="line">    getFile (url) &#123;</span><br><span class="line">      <span class="built_in">return</span> new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        getFile(url).<span class="keyword">then</span>(data =&gt; &#123;</span><br><span class="line">          resolve(data.data)</span><br><span class="line">        &#125;).catch(error =&gt; &#123;</span><br><span class="line">          reject(error.toString())</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">	  <span class="function"><span class="title">exportFiles</span></span>()&#123;</span><br><span class="line">      // arr = [&#123;url:xxx,a:xxx,b:xxx&#125;,&#123;url:xxx,a:xxx,b:xxx&#125;]</span><br><span class="line">      const data = arr; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径，此演示代码中的arr是一个数组，里面包含其他额外信息</span><br><span class="line">      const zip = new JSZip();</span><br><span class="line">      const cache = &#123;&#125;;</span><br><span class="line">      const promises = [];</span><br><span class="line">      data.forEach(item =&gt; &#123;</span><br><span class="line">        const promise = this.getFile(item.url).<span class="keyword">then</span>(data =&gt; &#123;</span><br><span class="line">          <span class="built_in">let</span> name = item.a+item.b+<span class="string">&quot;文件夹&quot;</span></span><br><span class="line">          // 下载文件, 并存成ArrayBuffer对象</span><br><span class="line">          <span class="built_in">let</span> file_name = item.a+item.b; // 获取文件名</span><br><span class="line">          <span class="built_in">let</span> folder = zip.folder(name); // 命名文件夹(即压缩成的zip包里面分为不同的文件夹包含不同的内容)</span><br><span class="line">          folder.file(file_name, data, &#123; binary: <span class="literal">true</span> &#125;); // 逐个添加文件</span><br><span class="line">          cache[file_name] = data;</span><br><span class="line">        &#125;);</span><br><span class="line">        promises.push(promise);</span><br><span class="line">      &#125;);</span><br><span class="line">      Promise.all(promises).<span class="keyword">then</span>(() =&gt; &#123;</span><br><span class="line">        zip.generateAsync(&#123; <span class="built_in">type</span>: <span class="string">&quot;blob&quot;</span> &#125;).<span class="keyword">then</span>(content =&gt; &#123;</span><br><span class="line">          // 生成二进制流</span><br><span class="line">          FileSaver.saveAs(content, <span class="string">&quot;xxx.zip&quot;</span>); // 利用file-saver保存文件  自定义文件名</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>1.需要文件夹的情况<br>let folder = zip.folder(xxxx);<br>folder.file(file_name, data, { binary: true });</p>
+<p>2.不需要文件夹的情况<br>zip.file(file_name, data, { binary: true });</p>
+<p>3.file_name不能重复<br>举个例子：如果有五张图片，刚好这五张图片除了url不一样，其他信息比如a的值，b的值等都一样，那么file_name的值也一样，这个时候打包成zip的里面只会包含其中随机一张</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-npm-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1135,102 +1233,6 @@
 
 
   
-    <article id="post-s-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/newBlog/2021/07/12/s-video/">某狐视频解析下载</a>
-    </h1>
-  
-
-        
-        <a href="/newBlog/2021/07/12/s-video/" class="archive-article-date">
-  	<time datetime="2021-07-12T08:50:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>之前给安全员小伙伴介绍了一个chrome插件，应该有不少人或多或少都听过Tampermonkey，下载到浏览器之后又安装了相关代码，实现了白嫖各大视频网站VIP视频，但是小伙伴<br>想下载职业相关视频（安全防范类），遇到了某狐的资源。。。</p>
-<h3 id="传统手段"><a href="#传统手段" class="headerlink" title="传统手段"></a>传统手段</h3><p>通过各个解析渠道，右键看看是否有另存为入口，没有则该手段无效。</p>
-<h3 id="最终过程（限于已经安装了相关插件的同学）"><a href="#最终过程（限于已经安装了相关插件的同学）" class="headerlink" title="最终过程（限于已经安装了相关插件的同学）"></a>最终过程（限于已经安装了相关插件的同学）</h3><p>1.右键查看log，然后复制到txt文本里面。<br><img src="https://ktig.github.io/newBlog/2021/07/12/s-video/1.png" alt="1"><br><img src="https://ktig.github.io/newBlog/2021/07/12/s-video/2.png" alt="2"></p>
-        
-          <a class="article-more-a" href="/newBlog/2021/07/12/s-video/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">video</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-      </span>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-	<div id="gitalk-container" style="margin: 0 30px;"></div>
-	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
-<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
-<script src="https://priesttomb.github.io/js/md5.min.js"></script>
-<script type="text/javascript">
-    new Gitalk({
-        clientID: 'a5fbcccfa0692cdffde4',
-        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
-        repo: 'newBlog-comments',
-        owner: 'Ktig',
-        admin: 'Ktig',
-        id: md5(location.pathname),
-        distractionFreeMode: true
-    }).render('gitalk-container')
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/newBlog/page/2/">2</a><a class="extend next" rel="next" href="/newBlog/page/2/">Next &amp;raquo;</a>
@@ -1245,7 +1247,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2022 kuan`s
+    		&copy; 2023 kuan`s
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
