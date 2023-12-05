@@ -167,6 +167,110 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-question-react" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/newBlog/2021/09/23/question-react/">前端面试题--React</a>
+    </h1>
+  
+
+        
+        <a href="/newBlog/2021/09/23/question-react/" class="archive-article-date">
+  	<time datetime="2021-09-23T06:13:35.103Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-React-中-setState-什么时候是同步的，什么时候是异步的？"><a href="#1-React-中-setState-什么时候是同步的，什么时候是异步的？" class="headerlink" title="1.React 中 setState 什么时候是同步的，什么时候是异步的？"></a>1.React 中 setState 什么时候是同步的，什么时候是异步的？</h3><ul>
+<li><strong>基于React的legacy模式</strong></li>
+</ul>
+<p>这个地方说到的同步和异步并不是setState这个方法，而是在于调用之后this.state能否立即更新.<br>众所周知调用setState({item: ‘new xxx’})之后, 会将传入setState的参数包装成一个update对象并添加到updateQueue队列中.<br>之后updateQueue队列在什么时机被合并到this.state中才是本题目的关键. 因为合并之后this.state必然就已经更新了.<br>state的合并是在fiber构建循环中进行的, 而fiber构建循环必然是在触发scheduler调度之后进行<br>如果立即进行scheduler调度, 那么this.state必然能同步获取; 反之, 如果异步进行scheduler调度, 那么this.state不能同步获取.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (</span><br><span class="line">    (executionContext &amp; LegacyUnbatchedContext) !== NoContext &amp;&amp;</span><br><span class="line">    (executionContext &amp; (RenderContext | CommitContext)) === NoContext</span><br><span class="line">) &#123;</span><br><span class="line">    // .... 省略部分本次讨论不会涉及的代码</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ensureRootIsScheduled(root, eventTime); // 触发scheduler调度(调度是异步的) , 所以该函数不会立即触发render.</span><br><span class="line">    <span class="keyword">if</span> (executionContext === NoContext) &#123;  // 当执行上下文为0时, 会刷新同步队列</span><br><span class="line">        // .... 省略部分本次讨论不会涉及的代码</span><br><span class="line"></span><br><span class="line">        // 这里是关键,  执行同步回调队列. 有兴趣的同学可以继续在源码中查看, 可以得到结论:</span><br><span class="line">        // <span class="keyword">if</span>分支之外的ensureRootIsScheduled(root, eventTime)和此处的flushSyncCallbackQueue()</span><br><span class="line">        // 最终都是调用performSyncWorkOnRoot进行fiber树的循环构建</span><br><span class="line">        flushSyncCallbackQueue(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>基于React的concurrent模式</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> // concurrent模式下根本没有下列代码, 所以不可能同步</span><br><span class="line"><span class="keyword">if</span> (executionContext === NoContext) &#123; </span><br><span class="line">    flushSyncCallbackQueue(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">React</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+      </span>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+	<div id="gitalk-container" style="margin: 0 30px;"></div>
+	<div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.css">
+<script src="https://cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+<script type="text/javascript">
+    new Gitalk({
+        clientID: 'a5fbcccfa0692cdffde4',
+        clientSecret: '83e6756ae6996304d700e6ab13857c45b5cf011b',
+        repo: 'newBlog-comments',
+        owner: 'Ktig',
+        admin: 'Ktig',
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    }).render('gitalk-container')
+</script>
+
+
+  
     <article id="post-html-string" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1224,6 +1328,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
             
             <div class="clearfix"></div>
